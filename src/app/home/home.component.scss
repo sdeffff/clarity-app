@@ -25,21 +25,23 @@ $grey: #656F77;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
+        gap: 2rem;
 
         text-align: center;
 
         h1 {
-            font-size: 3.65rem;
+            font-size: 4rem;
 
             line-height: 4rem;
         }
 
         h3 {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             text-transform: uppercase;
 
-            letter-spacing: .025rem;
+            font-weight: 600;
+
+            letter-spacing: .075rem;
         }
 
         div {
@@ -50,7 +52,9 @@ $grey: #656F77;
 
             button {
                 padding: 1.5rem 1.6rem;
-                font-size: 1.05rem;
+                font-size: 1.1rem;
+
+                font-weight: 700;
             }
         }
     }

@@ -3,13 +3,39 @@ $black: #191D21;
 $grey: #656F77;
 
 @font-face {
-    font-family: "LetoSans-Bold";
-    src: url("https://db.onlinewebfonts.com/t/33bce88f104fedc26d91518f6d8b4ca3.eot");
-    src: url("https://db.onlinewebfonts.com/t/33bce88f104fedc26d91518f6d8b4ca3.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/33bce88f104fedc26d91518f6d8b4ca3.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/33bce88f104fedc26d91518f6d8b4ca3.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/33bce88f104fedc26d91518f6d8b4ca3.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/33bce88f104fedc26d91518f6d8b4ca3.svg#LetoSans-Bold")format("svg");
+    font-family: "Kinetika";
+    font-weight: 400;
+    src: url("./assets/font/Kinetika-Regular.woff");
+}
+
+@font-face {
+    font-family: "Kinetika";
+    font-weight: 500;
+    src: url("./assets/font/Kinetika-Medium.woff");
+}
+
+@font-face {
+    font-family: "Kinetika";
+    font-weight: 300;
+    src: url("./assets/font/Kinetika-Book.woff");
+}
+
+@font-face {
+    font-family: "Kinetika";
+    font-weight: 600;
+    src: url("./assets/font/Kinetika-SemiBold.woff");
+}
+
+@font-face {
+    font-family: "Kinetika";
+    font-weight: 200;
+    src: url("./assets/font/Kinetika-Thin.woff");
+}
+
+@font-face {
+    font-family: "Kinetika";
+    font-weight: 700;
+    src: url("./assets/font/Kinetika-Bold.woff");
 }
 
 html, body { height: 100%; }
@@ -19,7 +45,7 @@ html, body { height: 100%; }
 *::before {
     margin: 0;
     padding: 0;
-    font-family: 'LetoSans-Bold', sans-serif;
+    font-family: 'Kinetika', sans-serif;
     box-sizing: border-box;
 }
 
