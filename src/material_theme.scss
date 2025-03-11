@@ -1,0 +1,63 @@
+@use '@angular/material' as mat;
+
+@import "styles.scss"; // - to ensure that font loads before angular material
+
+
+// For more information: https://material.angular.io/guide/theming
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+
+// Variables for styling:
+$purple: #4E6AF0;
+$black: #191D21;
+
+// Use your actual font
+$custom-typography: mat.define-typography-config(
+  $font-family: 'LetoSans-Bold'
+);
+
+// Create a custom palette based on your purple color
+$custom-primary: mat.define-palette(mat.$indigo-palette);
+$custom-accent: mat.define-palette(mat.$pink-palette); 
+$custom-warn: mat.define-palette(mat.$red-palette);
+
+$custom-theme: mat.define-light-theme((
+  color: (
+    primary: $custom-primary,
+    accent: $custom-accent,
+    warn: $custom-warn,
+  ),
+  typography: $custom-typography,
+  density: 0,
+));
+
+@include mat.all-component-themes($custom-theme);
+
+//For primary btn
+.mat-mdc-button, 
+.mat-mdc-raised-button, 
+.mat-mdc-unelevated-button, 
+.mat-mdc-text-button {
+  font-family: 'LetoSans-Bold' !important;
+  background-color: $purple !important;
+  color: white !important;
+}
+
+//--
+
+//For secondary btn
+.mat-mdc-outlined-button {
+  background-color: #fff !important;
+  color: $black !important; 
+}
+
+html, body {
+  @include mat.all-component-themes($custom-theme);
+}

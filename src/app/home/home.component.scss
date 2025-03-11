@@ -1,0 +1,57 @@
+$black: #191D21;
+$grey: #656F77;
+
+.main-section {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+
+    background: $black;
+    background-image: url("../../assets/imgs/Hands\ Show.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    article {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        color: #fff;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+
+        text-align: center;
+
+        h1 {
+            font-size: 3.65rem;
+
+            line-height: 4rem;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            text-transform: uppercase;
+
+            letter-spacing: .025rem;
+        }
+
+        div {
+            display: flex;
+            align-items: center;
+
+            gap: 1.5rem;
+
+            button {
+                padding: 1.5rem 1.6rem;
+                font-size: 1.05rem;
+            }
+        }
+    }
+}
