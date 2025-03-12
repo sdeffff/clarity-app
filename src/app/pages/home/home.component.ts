@@ -2,13 +2,10 @@ import { Component } from '@angular/core';
 
 //Angular material:
 import { MatButtonModule } from "@angular/material/button";
-import {MatInputModule} from '@angular/material/input';
-
-//To change the title of the page:
-import { Title } from '@angular/platform-browser';
+import { MatInputModule } from '@angular/material/input';
 
 //Header:
-import { HeaderComponent } from '../header/header.component';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +15,4 @@ import { HeaderComponent } from '../header/header.component';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  constructor (private title: Title) {
-    this.title.setTitle("Clarity ✨");
-  };
 }

@@ -70,6 +70,16 @@ $custom-theme: mat.define-light-theme((
 
 //--
 
+//For mat-fab button: 
+html .mat-mdc-fab.mat-accent, 
+body .mat-mdc-fab.mat-accent, 
+html .mat-mdc-fab-extended.mat-accent, 
+body .mat-mdc-fab-extended.mat-accent { 
+  background-color: #4E6AF0 !important;
+}
+
+//--
+
 /* Input styles */
 .mdc-text-field--filled .mdc-floating-label {
   font-family: 'Kinetika' !important;

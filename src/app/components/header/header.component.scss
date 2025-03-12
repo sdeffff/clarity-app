@@ -1,9 +1,12 @@
+$black: #191D21;
+$grey: #656F77;
+
 header {
     position: fixed;
     top: 0;
     left: 0;
 
-    background: transparent;
+    background: $black;
 
     width: 100%;
 
@@ -12,6 +15,8 @@ header {
     justify-content: space-between;
 
     padding: 1rem 2rem;
+
+    z-index: 99;
 
     nav {
         display: flex;
