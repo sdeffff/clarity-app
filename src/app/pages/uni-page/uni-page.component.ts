@@ -3,7 +3,7 @@ import {MatButtonModule} from '@angular/material/button';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
 
 import { HeaderComponent } from '../../components/header/header.component';
 
@@ -12,7 +12,7 @@ import { AppService } from '../../services/app-service.service';
 @Component({
   selector: 'app-uni-page',
   standalone: true,
-  imports: [HeaderComponent, HttpClientModule, NgFor, NgIf, MatButtonModule],
+  imports: [HeaderComponent, HttpClientModule, NgFor, MatButtonModule],
   providers: [AppService],
   templateUrl: './uni-page.component.html',
   styleUrl: './uni-page.component.scss'
@@ -38,6 +38,5 @@ export class UniPageComponent {
 
   ngOnInit(): void {
     this.getUnis();
-    console.log(this.unis);
   }
 }

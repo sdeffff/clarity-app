@@ -18,7 +18,7 @@ export class HeaderComponent {
   constructor(private router: Router) { };
 
   protected headerStyles = "background: transparent";
-
+  
   ngOnInit(): void {
     if(!(this.router.url === "/")) {
       this.headerStyles = "background: #191D21";

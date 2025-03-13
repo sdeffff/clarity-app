@@ -14,8 +14,35 @@ section {
         left: 50%;
         transform: translate(-50%, -50%);
 
-        button:disabled {
-            background-color: #3e54c5 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+
+        a {
+            padding: 3.75rem 3.5rem;
+
+            &[disabled] {
+                position: relative !important;
+
+                background-color: #3e54c5 !important;
+
+                article {
+                    img {
+                        opacity: .6;
+                    }
+                }
+            }
+
+            article {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                img {
+                    max-width: 14rem;
+                }
+            }
         }
     }
 }

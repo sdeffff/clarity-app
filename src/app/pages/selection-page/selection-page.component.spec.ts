@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FacultyPageComponent } from './faculty-page.component';
+import { SelectionPageComponent } from './selection-page.component';
 
-describe('FacultyPageComponent', () => {
-  let component: FacultyPageComponent;
-  let fixture: ComponentFixture<FacultyPageComponent>;
+describe('SelectionPageComponent', () => {
+  let component: SelectionPageComponent;
+  let fixture: ComponentFixture<SelectionPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FacultyPageComponent]
+      imports: [SelectionPageComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(FacultyPageComponent);
+    fixture = TestBed.createComponent(SelectionPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

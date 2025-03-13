@@ -1,0 +1,39 @@
+<section>
+    <app-header></app-header>
+
+    <article
+    [hidden]="this.errMessage">
+        <h2>Happened some error with the server, sorry</h2>
+    
+        <h1>:(</h1>
+    </article>
+ 
+    <div>
+        <h2>Select the {{this.currPage}}</h2>
+
+        <ul>
+            <li 
+            [hidden]="this.currPage !== 'faculty'"
+            *ngFor="let el of data">
+                <a mat-flat-button
+                href="/{{this.currentUni}}/{{el.faculty}}/select-year">{{el.faculty}}</a>
+            </li>
+
+            <li 
+            [hidden]="this.currPage !== 'year'"
+            *ngFor="let year of facultyData.years">
+                <a mat-flat-button
+                    href="/{{this.currentUni}}/{{this.currentFaculty}}/{{year}}/select-season">
+                    {{stringToNumber(year)}} year
+                </a>
+            </li>
+
+            <li 
+            [hidden]="this.currPage !== 'season'"
+            *ngFor="let season of facultyData.seasons">
+                <a mat-flat-button
+                href="/{{this.currentUni}}/{{this.currentFaculty}}/">{{season}}</a>
+            </li>
+        </ul>
+    </div>
+</section>

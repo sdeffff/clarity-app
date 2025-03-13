@@ -2,11 +2,13 @@ import { Routes } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
 import { UniPageComponent } from './pages/uni-page/uni-page.component';
-import { FacultyPageComponent } from './pages/faculty-page/faculty-page.component';
+import { SelectionPageComponent } from './pages/selection-page/selection-page.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent },
 
     { path: "select-uni", component: UniPageComponent },
-    { path: ":uni/faculties", component: FacultyPageComponent },
+    { path: ":uni/faculties", component: SelectionPageComponent },
+    { path: ":uni/:faculty/select-year", component: SelectionPageComponent },
+    { path: ":uni/:faculty/:year/select-season", component: SelectionPageComponent},
 ];

@@ -14,7 +14,7 @@ export class AppService {
     return this.http.get<{uni: string}[]>(`${environment.apiUrl}/unis`);
   }
 
-  getFaculties(uni: string): Observable<{faculty: string}[]> {
-    return this.http.get<{faculty: string}[]>(`${environment.apiUrl}/${uni}/faculties/`);
+  getFacultiesInfo(uni: string): Observable<{faculty: string, seasons: string[], years: string[]}[]> {
+    return this.http.get<{faculty: string, seasons: string[], years: string[]}[]>(`${environment.apiUrl}/${uni}/faculties/`);
   }
 }
