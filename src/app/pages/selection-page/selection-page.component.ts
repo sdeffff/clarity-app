@@ -27,9 +27,7 @@ export class SelectionPageComponent {
     private activeRoute: ActivatedRoute,
     private router: Router,
   ) {
-    router.events.subscribe((val) => {
-      console.log("asd")
-    })
+
   };
 
   protected currentUni: string | null = "";
@@ -66,27 +64,6 @@ export class SelectionPageComponent {
     // ])
   }
 
-  //functions to get data from urls
-  getUniInfo():void {
-    this.activeRoute.paramMap.pipe(
-      concatMap(params => this.service.getUnis().pipe(
-        map((el: {uni: string}[]) => {
-          el.forEach(el => {
-            if(el.uni === params.get("uni")) {
-              this.currentUni = el.uni;
-              return;
-            }
-          })
-
-          if(this.currentUni === "") {
-            window.alert("There is no such uni, sorry!");
-            this.router.navigate(["/select-uni"]);
-          }
-        })
-      ))
-    ).subscribe({});
-  }
-
   getFacultyInfo():void {
     this.activeRoute.paramMap.subscribe(params => {
       this.data.forEach((el) => {
@@ -97,7 +74,7 @@ export class SelectionPageComponent {
       });
 
       if(this.currentFaculty == "") {
-        window.alert("There is no such faculty, sorry");
+        alert("There is no such faculty, sorry");
         this.router.navigate(["/select-uni"]);
       }
     });
@@ -106,7 +83,7 @@ export class SelectionPageComponent {
   getYearInfo(): void {
     this.activeRoute.paramMap.subscribe(params => {
       if(!this.facultyData.years.includes(params.get("year")!)) {
-          window.alert("Wrong year!");
+          alert("Wrong year!");
           this.router.navigate([`/${this.currentUni}/${this.currentFaculty}`])
       }
 
@@ -124,53 +101,87 @@ export class SelectionPageComponent {
   ngOnInit(): void {
     const currentPage: string = this.router.url.split("/")[this.router.url.split("/").length - 1];
 
-    const waitForData = () => {
-
-      //Calling this function at the beggining to get all of the main info
-      this.getUniInfo(); //getting Uni name
-      this.getFacultiesData(); //Data about all of the faculties in currentUni
-
-      if (this.data.length === 0) {
-        setTimeout(waitForData, 10); // Check again after 10ms
-        return;
-      }  
-
-      switch (currentPage) {
-        case "faculties": {
-          this.currPage = "faculty";
-  
-          break;
-        };
-  
-        case "select-year": {
-          this.currPage = "year";
-  
-          this.getFacultyInfo();
-  
-          this.data.forEach((el) => {
-            if(this.currentFaculty === el.faculty) {
-                this.facultyData.seasons = el.seasons;
-                this.facultyData.years = el.years;
-  
-                return;
+    this.activeRoute.paramMap.pipe(
+      concatMap(params => this.service.getUnis().pipe(
+        map((unis: { uni: string }[]) => {
+          let foundUni = "";
+      
+          unis.forEach(el => {
+            if (el.uni === params.get("uni")!) {
+              foundUni = el.uni;
             }
           });
-  
-          break;
-        };
-  
-        case "select-season": {
-          this.currPage = "season";
-          
-          break;
-        };
-  
-        default: {
-          this.router.navigate(["/unis"]);
+      
+          return foundUni;
+        })
+      ))
+    ).subscribe({
+      next: (res) => {
+        this.currentUni = res;
+
+        if(this.currentUni === "") {
+          this.router.navigate(["/select-uni"]);
+          return;
         }
+
+        const waitForData = () => {
+          this.getFacultiesData(); //Data about all of the faculties in currentUni
+
+          if (this.data.length === 0) {
+            setTimeout(waitForData, 10);
+            return;
+          }  
+
+          this.handlePageRouting(currentPage);
+        }
+
+        waitForData();
+      },
+
+      error: (err) => {
+        this.router.navigate(["/select-uni"]);
       }
+    })
+  }
+
+
+// New method to handle page routing
+private handlePageRouting(currentPage: string): void {
+  // Wait for faculty data to be loaded
+  const checkDataAndRoute = () => {
+    if (this.data.length === 0) {
+      setTimeout(checkDataAndRoute, 100);
+      return;
     }
 
-    waitForData();
-  }
+    switch (currentPage) {
+      case "faculties": {
+        this.currPage = "faculty";
+        break;
+      }
+      case "select-year": {
+        this.currPage = "year";
+        this.getFacultyInfo();
+        
+        this.data.forEach((el) => {
+          if(this.currentFaculty === el.faculty) {
+            this.facultyData.seasons = el.seasons;
+            this.facultyData.years = el.years;
+            return;
+          }
+        });
+        break;
+      }
+      case "select-season": {
+        this.currPage = "season";
+        break;
+      }
+      default: {
+        this.router.navigate(["/unis"]);
+      }
+    }
+  };
+
+  checkDataAndRoute();
+}
 }
