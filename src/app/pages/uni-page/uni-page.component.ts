@@ -26,7 +26,7 @@ export class UniPageComponent {
     this.service.getUnis().subscribe({
       next: (res) => {
         res.forEach((el) => {
-          this.unis.push(el.uni);
+          this.unis.push(el.uniname)
         })
       },
 

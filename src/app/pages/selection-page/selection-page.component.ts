@@ -6,13 +6,13 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NgFor, NgIf } from '@angular/common';
-
 import { MatButtonModule } from '@angular/material/button';
 
 import { AppService } from '../../services/app-service.service';
-import { concatMap, map, } from 'rxjs';
+import { concatMap, map, take } from 'rxjs';
 
 import { numToStringMap } from '../../models/numToString.model';
+import { universityModel } from '../../models/university.model';
 
 @Component({
   selector: 'app-selection-page',
@@ -33,21 +33,24 @@ export class SelectionPageComponent {
   protected currentUni: string | null = "";
   protected currentFaculty: string | null = "";
   protected currentYear: string | null = "";
+  protected currentSeason: string | null = "";
   protected currPage: string = "";
 
-  protected data: {faculty: string, seasons: string[], years: string[]}[] = [];
-  protected facultyData: {seasons: string[], years: string[]} = {seasons: [], years: []};
+  protected data: universityModel[] = [];
 
   //Params for err message:
   protected errMessage: boolean = true;
   protected errStyles: string = "display: none";
 
-  //Function to get list of faculties from db
-  getFacultiesData(): void {
+  //Styles for the list to change if the amount if li tags less than 3:
+  protected listStyles: string = "grid-template-columns: repeat(2, 1fr)";
+
+  //Function to get info about current university(faculties, years, seasons):
+  private getCurrentUniInfo(): void {
     this.data = [];
-    this.service.getFacultiesInfo(this.currentUni!).subscribe({
+    this.service.getUniInfo(this.currentUni!).subscribe({
       next: (res) => {
-        res.forEach(el => this.data.push(el));
+        this.data = res;
       },
 
       error: (err) => {
@@ -57,58 +60,19 @@ export class SelectionPageComponent {
     });
   };
 
-  //function to check url's data:
-  checkUrlData(urlParam: string) {
-    // const urlFunctionsMap = new Map([
-    //   [],
-    // ])
-  }
-
-  getFacultyInfo():void {
-    this.activeRoute.paramMap.subscribe(params => {
-      this.data.forEach((el) => {
-        if(el.faculty.includes(params.get("faculty")!)) {
-          this.currentFaculty = el.faculty;
-          return;
-        };
-      });
-
-      if(this.currentFaculty == "") {
-        alert("There is no such faculty, sorry");
-        this.router.navigate(["/select-uni"]);
-      }
-    });
-  };
-
-  getYearInfo(): void {
-    this.activeRoute.paramMap.subscribe(params => {
-      if(!this.facultyData.years.includes(params.get("year")!)) {
-          alert("Wrong year!");
-          this.router.navigate([`/${this.currentUni}/${this.currentFaculty}`])
-      }
-
-      this.currentYear = params.get("year");
-    });
-  }
-
-  //Function to transform numbers to string:
-  stringToNumber(year: string): number {
-    return numToStringMap.get(year)!;
-  }
-
   //Also getting name of the uni from url and checking, if there is such uni in db
   //So there will be no errors
   ngOnInit(): void {
-    const currentPage: string = this.router.url.split("/")[this.router.url.split("/").length - 1];
+    const currentPage = this.router.url.split("/")[this.router.url.split("/").length - 1];
 
     this.activeRoute.paramMap.pipe(
       concatMap(params => this.service.getUnis().pipe(
-        map((unis: { uni: string }[]) => {
+        map((unis: universityModel[]) => {
           let foundUni = "";
       
           unis.forEach(el => {
-            if (el.uni === params.get("uni")!) {
-              foundUni = el.uni;
+            if (el.uniname === params.get("uni")!) {
+              foundUni = el.uniname;
             }
           });
       
@@ -120,17 +84,19 @@ export class SelectionPageComponent {
         this.currentUni = res;
 
         if(this.currentUni === "") {
+          alert("Wrong university, sorry!")
           this.router.navigate(["/select-uni"]);
           return;
         }
 
         const waitForData = () => {
-          this.getFacultiesData(); //Data about all of the faculties in currentUni
+          this.getCurrentUniInfo(); //Data about all of the faculties in currentUni
 
+          // Wait for data to be loaded, idk if there is a better way to do this :/
           if (this.data.length === 0) {
-            setTimeout(waitForData, 10);
+            setTimeout(waitForData, 50);
             return;
-          }  
+          }
 
           this.handlePageRouting(currentPage);
         }
@@ -144,44 +110,101 @@ export class SelectionPageComponent {
     })
   }
 
+  //Function to transform numbers to string:
+  protected numberToString(year: number): string {
+    return numToStringMap.get(year)!;
+  }
+
+  private checkUrlData(urlData: string): void {
+    const validateParam = (
+      paramName: string, 
+      validValues: string[] | undefined, 
+      setter: (value: string) => void,
+      errorRedirectPath: string) => 
+      {
+        this.activeRoute.paramMap.pipe(
+          take(1)
+        ).subscribe(params => {
+          const paramValue = params.get(paramName);
+          if (this.data.length > 0 && validValues && validValues.includes(paramValue!)) {
+            setter(paramValue!);
+          } else {
+            alert(`There is no such ${paramName}, sorry`);
+            console.log(errorRedirectPath);
+            this.router.navigate([errorRedirectPath]);
+          }
+        });
+    };
+
+    switch(urlData) {
+      case "faculty": {
+        validateParam(
+          urlData, 
+          this.data[0].faculties, 
+          (value) => this.currentFaculty = value,
+          `${this.currentUni}/select-faculty`);
+
+          break;
+      };
+
+      case "year": {
+        validateParam(
+          urlData, 
+          this.data[0].years.map(el => this.numberToString(el)), 
+          (value) => this.currentYear = value, 
+          `${this.currentUni}/${this.currentFaculty}/select-year`);
+
+          break;
+      };
+
+      case "season": {
+        validateParam(
+          urlData, 
+          this.data[0].seasons, 
+          (value) => this.currentSeason = value,
+          `${this.currentUni}/${this.currentFaculty}/${this.currentYear}/select-season`);
+
+          break;
+      };
+    }
+  }
 
 // New method to handle page routing
 private handlePageRouting(currentPage: string): void {
-  // Wait for faculty data to be loaded
-  const checkDataAndRoute = () => {
-    if (this.data.length === 0) {
-      setTimeout(checkDataAndRoute, 100);
-      return;
+  switch (currentPage) {
+    case "select-faculty": {
+      this.currPage = "faculty";
+
+      break; 
+    } 
+    case "select-year": {
+      this.currPage = "year";
+
+      this.checkUrlData("faculty");
+
+      break;
+    }
+    case "select-season": {
+      this.currPage = "season";
+
+      this.checkUrlData("faculty");
+      this.checkUrlData("year");
+
+      break;
+    }
+    case "select-subject": {
+      this.currPage = "subject";
+
+      this.checkUrlData("faculty");
+      this.checkUrlData("year");
+      this.checkUrlData("season");
+
+      break;
     }
 
-    switch (currentPage) {
-      case "faculties": {
-        this.currPage = "faculty";
-        break;
-      }
-      case "select-year": {
-        this.currPage = "year";
-        this.getFacultyInfo();
-        
-        this.data.forEach((el) => {
-          if(this.currentFaculty === el.faculty) {
-            this.facultyData.seasons = el.seasons;
-            this.facultyData.years = el.years;
-            return;
-          }
-        });
-        break;
-      }
-      case "select-season": {
-        this.currPage = "season";
-        break;
-      }
-      default: {
-        this.router.navigate(["/unis"]);
-      }
+    default: {
+      this.router.navigate(["/unis"]);
     }
+  }
   };
-
-  checkDataAndRoute();
-}
 }

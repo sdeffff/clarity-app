@@ -8,7 +8,8 @@ export const routes: Routes = [
     { path: "", component: HomeComponent },
 
     { path: "select-uni", component: UniPageComponent },
-    { path: ":uni/faculties", component: SelectionPageComponent },
+    { path: ":uni/select-faculty", component: SelectionPageComponent },
     { path: ":uni/:faculty/select-year", component: SelectionPageComponent },
-    { path: ":uni/:faculty/:year/select-season", component: SelectionPageComponent},
+    { path: ":uni/:faculty/:year/select-season", component: SelectionPageComponent },
+    { path: ":uni/:faculty/:year/:season/select-subject", component: SelectionPageComponent }
 ];

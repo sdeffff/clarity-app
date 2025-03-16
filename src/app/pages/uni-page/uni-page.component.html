@@ -5,10 +5,8 @@
         <a mat-fab extended 
         *ngFor="let uni of unis" 
         [disabled]="uni === 'STU'"
-        href="{{uni}}/faculties/">
+        href="{{uni}}/select-faculty/">
             <article>
-                <!-- {{uni}} -->
-
                 <img src='../../../assets/imgs/{{uni.toLowerCase()}}-logo.png' alt="">
             </article>
         </a>

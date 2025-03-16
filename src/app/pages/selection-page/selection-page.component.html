@@ -3,7 +3,7 @@
 
     <article
     [hidden]="this.errMessage">
-        <h2>Happened some error with the server, sorry</h2>
+        <h2>Happened some error with the server, try later please</h2>
     
         <h1>:(</h1>
     </article>
@@ -11,28 +11,29 @@
     <div>
         <h2>Select the {{this.currPage}}</h2>
 
-        <ul>
+        <ul
+            [style]="currPage === 'season' ? this.listStyles : ''">
             <li 
             [hidden]="this.currPage !== 'faculty'"
-            *ngFor="let el of data">
+            *ngFor="let el of data.length > 0 && data[0].faculties ? data[0].faculties : []">
                 <a mat-flat-button
-                href="/{{this.currentUni}}/{{el.faculty}}/select-year">{{el.faculty}}</a>
+                href="/{{this.currentUni}}/{{el}}/select-year">{{el}}</a>
             </li>
 
             <li 
             [hidden]="this.currPage !== 'year'"
-            *ngFor="let year of facultyData.years">
+            *ngFor="let year of data.length > 0 && data[0].years ? data[0].years : []">
                 <a mat-flat-button
-                    href="/{{this.currentUni}}/{{this.currentFaculty}}/{{year}}/select-season">
-                    {{stringToNumber(year)}} year
+                    href="/{{this.currentUni}}/{{this.currentFaculty}}/{{numberToString(year)}}/select-season">
+                    {{year}} year
                 </a>
             </li>
 
             <li 
             [hidden]="this.currPage !== 'season'"
-            *ngFor="let season of facultyData.seasons">
+            *ngFor="let season of data.length > 0 && data[0].seasons ? data[0].seasons : []">
                 <a mat-flat-button
-                href="/{{this.currentUni}}/{{this.currentFaculty}}/">{{season}}</a>
+                href="/{{this.currentUni}}/{{this.currentFaculty}}/{{this.currentYear}}/{{season}}/select-subject">{{season}}</a>
             </li>
         </ul>
     </div>
