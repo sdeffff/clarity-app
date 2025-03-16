@@ -1,0 +1,16 @@
+<section>
+    <app-header></app-header>
+
+    <ul>
+        <li
+        *ngFor="let subject of data.length !== 0 && data[0].subjects.length !== 0 ? data[0].subjects : []">
+
+        <a 
+        mat-flat-button
+        href="">
+            {{subject}}
+        </a>
+
+        </li>
+    </ul>
+</section>
