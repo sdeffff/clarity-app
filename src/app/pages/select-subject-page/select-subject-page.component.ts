@@ -3,9 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { NgIf, NgFor } from '@angular/common';
+import { NgFor } from '@angular/common';
 
-import { HeaderComponent } from '../../components/header/header.component';
 import { MatButtonModule } from '@angular/material/button';
 
 import { AppService } from '../../services/app-service.service';
@@ -15,7 +14,7 @@ import { facultySubjects } from '../../models/faculty-subjects.model';
 @Component({
   selector: 'app-select-subject-page',
   standalone: true,
-  imports: [HttpClientModule, HeaderComponent, NgFor, MatButtonModule],
+  imports: [HttpClientModule, NgFor, MatButtonModule],
   providers: [AppService],
   templateUrl: './select-subject-page.component.html',
   styleUrl: './select-subject-page.component.scss'
@@ -27,7 +26,7 @@ export class SelectSubjectPageComponent {
     private router: Router,
   ) { };
 
-  private urlData: string[] = [];
+  protected urlData: string[] = [];
   protected data: facultySubjects[] = [];
 
   private getSubjects(): void {

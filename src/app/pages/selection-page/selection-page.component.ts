@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { HeaderComponent } from '../../components/header/header.component';
-
 import { HttpClientModule } from '@angular/common/http';
 
 import { NgFor, NgIf } from '@angular/common';
@@ -17,8 +15,8 @@ import { universityModel } from '../../models/university.model';
 @Component({
   selector: 'app-selection-page',
   standalone: true,
-  imports: [HttpClientModule, NgFor, HeaderComponent, MatButtonModule, NgIf],
-  providers: [AppService, HeaderComponent],
+  imports: [HttpClientModule, NgFor, MatButtonModule, NgIf],
+  providers: [AppService],
   templateUrl: './selection-page.component.html',
   styleUrl: './selection-page.component.scss'
 })
@@ -54,8 +52,7 @@ export class SelectionPageComponent {
       },
 
       error: (err) => {
-        if(err) this.errMessage = false;
-        if(err) this.errStyles = "display: block";
+        this.router.navigate([".."]);
       }
     });
   };
@@ -115,6 +112,8 @@ export class SelectionPageComponent {
     return numToStringMap.get(year)!;
   }
 
+  //So basically this enormous function is used to check url params, i am doing this first time,
+  //so i think i didn't do it really well, don't be mad at me, sry
   private checkUrlData(urlData: string): void {
     const validateParam = (
       paramName: string, 
@@ -130,7 +129,7 @@ export class SelectionPageComponent {
             setter(paramValue!);
           } else {
             alert(`There is no such ${paramName}, sorry`);
-            console.log(errorRedirectPath);
+
             this.router.navigate([errorRedirectPath]);
           }
         });

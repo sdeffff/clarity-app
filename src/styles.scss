@@ -47,6 +47,14 @@ $grey: #656F77;
     box-sizing: border-box;
 }
 
+#selection-section {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+}
+
 a {
     text-decoration: none;
 }

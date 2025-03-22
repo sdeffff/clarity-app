@@ -5,14 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { NgFor } from '@angular/common';
 
-import { HeaderComponent } from '../../components/header/header.component';
-
 import { AppService } from '../../services/app-service.service';
 
 @Component({
   selector: 'app-uni-page',
   standalone: true,
-  imports: [HeaderComponent, HttpClientModule, NgFor, MatButtonModule],
+  imports: [HttpClientModule, NgFor, MatButtonModule],
   providers: [AppService],
   templateUrl: './uni-page.component.html',
   styleUrl: './uni-page.component.scss'

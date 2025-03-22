@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormField } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -15,13 +15,15 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  constructor(private router: Router) { };
+  constructor(private router: ActivatedRoute) { };
 
   protected headerStyles = "background: transparent";
   
   ngOnInit(): void {
-    if(!(this.router.url === "/")) {
-      this.headerStyles = "background: #191D21";
-    }
+
+
+    // if(!(this.router.url === "/")) {
+    //   this.headerStyles = "background: #191D21";
+    // }
   }  
 }

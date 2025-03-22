@@ -1,0 +1,16 @@
+<section id="selection-section">
+    <article *ngIf="isEmpty">
+        There is still no assigments for this subject, but you can add the first one!
+    </article>
+
+    <ul>
+        <li *ngFor="let subjectData of data.length > 0 ? data : []">
+            <figure>
+                <p>{{subjectData.assignmentmedia}}</p>
+                <!-- <img src=""> -->
+            
+                <figcaption>{{subjectData.assignmentname}}</figcaption>
+            </figure>
+        </li>
+    </ul>
+</section>

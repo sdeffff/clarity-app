@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 //Models:
 import { universityModel } from '../models/university.model';
 import { facultySubjects } from '../models/faculty-subjects.model';
+import { subjectDataModel } from '../models/subject-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,4 +37,13 @@ export class AppService {
   getFacultySubjects(apiData: string[]): Observable<facultySubjects[]> {
     return this.http.get<facultySubjects[]>(`${environment.apiUrl}/${apiData[0]}/${apiData[1]}/${apiData[2]}/${apiData[3]}`);
   }
+
+  /**
+   * 
+   * @param subject - name of the subject using which we will be able to get info about current subject
+   * @returns - an observable array where all of the assignments for subject are contained
+   */
+  getSubjectData(subject: string): Observable<subjectDataModel[]> {
+    return this.http.get<subjectDataModel[]>(`${environment.apiUrl}/subject-data/${subject}`)
+  } 
 }
