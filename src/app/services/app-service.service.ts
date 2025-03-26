@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
+import { HttpHeaderBuilderService } from './http-header-builder.service';
+
 //Models:
 import { universityModel } from '../models/university.model';
 import { facultySubjects } from '../models/faculty-subjects.model';
@@ -13,7 +15,10 @@ import { subjectDataModel } from '../models/subject-data.model';
   providedIn: 'root'
 })
 export class AppService {
-  constructor(private http: HttpClient) {};
+  constructor(
+    private http: HttpClient,
+    private headerBuilder: HttpHeaderBuilderService,
+  ) {};
 
   //Method to get all of the universities and their info
   getUnis(): Observable<universityModel[]> {
@@ -46,4 +51,18 @@ export class AppService {
   getSubjectData(subject: string): Observable<subjectDataModel[]> {
     return this.http.get<subjectDataModel[]>(`${environment.apiUrl}/subject-data/${subject}`)
   } 
+
+  addSubjectMaterial(subjectFile: File, subject: string): Observable<any> {
+    let httpOptions = {
+      headers: this.headerBuilder.addContentType().build()
+    }
+
+    const formData = new FormData();
+    formData.append('file', subjectFile);
+    formData.append('subject', subject);
+
+    return this.http.post<any>(`${environment.apiUrl}/subject-data/${subject}/add-material`, 
+      formData
+    )
+  }
 }

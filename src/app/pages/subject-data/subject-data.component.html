@@ -1,6 +1,21 @@
 <section id="selection-section">
-    <article *ngIf="isEmpty">
-        There is still no assigments for this subject, but you can add the first one!
+    <article 
+    *ngIf="isEmpty"
+    class="no-material-txt">
+        <p>There are no assigments for this subject, but you can add the first one!</p>
+        <a 
+        mat-flat-button
+        href="">Add a material</a>
+
+        <form>
+            <input 
+            name="file"
+            (change)="onFileSelected($event)"
+            type="file">
+
+            <button (click)="asd($event)">asd</button>
+        </form>
+
     </article>
 
     <ul>
