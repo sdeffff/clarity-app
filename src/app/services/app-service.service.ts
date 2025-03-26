@@ -52,17 +52,33 @@ export class AppService {
     return this.http.get<subjectDataModel[]>(`${environment.apiUrl}/subject-data/${subject}`)
   } 
 
-  addSubjectMaterial(subjectFile: File, subject: string): Observable<any> {
-    let httpOptions = {
-      headers: this.headerBuilder.addContentType().build()
-    }
-
+  /**
+   * 
+   * @param subjectFile - file of media we want to add to database
+   * @param subject - subject name to post to the url
+   * @returns an observable with object where link to media is located
+   */
+  addSubjectMaterialToStorage(subjectFile: File, subject: string): Observable<{fileUrl: string}> {
     const formData = new FormData();
     formData.append('file', subjectFile);
     formData.append('subject', subject);
 
     return this.http.post<any>(`${environment.apiUrl}/subject-data/${subject}/add-material`, 
       formData
+    )
+  }
+
+  addAssignmentDataToDB(data: subjectDataModel): Observable<any> {
+    let httpOptions = {
+      headers: this.headerBuilder.addContentType().build(),
+    };
+
+    return this.http.post<any>(`${environment.apiUrl}/${data.uni}/subject-data/${data.subject}`, {
+      subject: data.subject,
+      assignmentname: data.assignmentname,
+      assignmentmedia: data.assignmentmedia,
+    },
+    httpOptions
     )
   }
 }

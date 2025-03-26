@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AppService } from '../../services/app-service.service';
 
 import { subjectDataModel } from '../../models/subject-data.model';
+import { concatMap } from 'rxjs';
 
 @Component({
   selector: 'app-subject-data',
@@ -27,8 +28,9 @@ export class SubjectDataComponent {
   protected isEmpty: boolean = false;
 
   protected selectedFile: File | null = null;
+  private imgLink: string = "";
 
-  onFileSelected(event: Event) {
+  protected onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
@@ -36,20 +38,39 @@ export class SubjectDataComponent {
     }
   }
 
-  asd(e: Event) {
+  protected uploadImg(e: Event) {
     e.preventDefault();
+    
+    if(!this.selectedFile) {
+      alert("Please upload an image!");
+      return;
+    }
 
     const urlData = this.getUrlData();
+    const subjectName = urlData[urlData.length - 1];
 
-    this.service.addSubjectMaterial(this.selectedFile!, urlData[urlData.length - 1]).subscribe({
+    this.service.addSubjectMaterialToStorage(this.selectedFile!, subjectName).pipe(
+      concatMap((res) => {
+        const passingData = {
+          uni: urlData[0],
+          subject: subjectName,
+          assignmentname: "asd",  
+          assignmentmedia: res.fileUrl,
+        };
+
+        console.log(passingData);
+
+        return this.service.addAssignmentDataToDB(passingData);
+      })
+    ).subscribe({
       next: (res) => {
-        console.log(res);
+        console.log(res)
       },
 
       error: (err) => {
         console.log(err);
       }
-    });
+    })
   }
 
   private getUrlData(): string[] {
@@ -103,7 +124,6 @@ export class SubjectDataComponent {
     this.service.getSubjectData(subjectName).subscribe({
       next: (res) => {
         if(res.length > 0) {
-          console.log(res);
           this.data = res;
         } else {
           this.isEmpty = true;
