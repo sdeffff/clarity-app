@@ -19,6 +19,8 @@ import { facultySubjects } from '../../models/faculty-subjects.model';
   templateUrl: './select-subject-page.component.html',
   styleUrl: './select-subject-page.component.scss'
 })
+
+//Page where user selects a SUBJECT itself
 export class SelectSubjectPageComponent {
   constructor(
     private service: AppService,
@@ -33,12 +35,13 @@ export class SelectSubjectPageComponent {
     this.service.getFacultySubjects(this.urlData).subscribe({
       next: (res) => {
         if(res.length === 0) {
-          this.router.navigate([`${this.urlData[0]}/${this.urlData[1]}/${this.urlData[2]}/select-season`]);
+          this.router.navigate([`/selection-page`]);
         } else this.data = res;
       },
 
       error: (err) => {
-        this.router.navigate([`${this.urlData[0]}/${this.urlData[1]}/${this.urlData[2]}/select-season`]);
+        this.router.navigate([`/selection-page`]);
+        alert("ASd1")
       }
     })
   }

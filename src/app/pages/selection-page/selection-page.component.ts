@@ -49,14 +49,14 @@ export class SelectionPageComponent {
   //Function to get all of the information from db
   private getFullInfo(): void {
     this.data = [];
-    this.service.getUnis().subscribe({
+    this.service.getUnisData().subscribe({
       next: (res) => {
         this.data = res;
       },
 
       error: (err) => {
         console.error(err);
-        this.router.navigate(["/"]);
+        alert("asd");
       }
     });
   };

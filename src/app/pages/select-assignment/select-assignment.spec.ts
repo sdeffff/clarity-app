@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubjectDataComponent } from './subject-data.component';
+import { SelectAssignmentComponent } from './select-assignment.component';
 
-describe('SubjectDataComponent', () => {
-  let component: SubjectDataComponent;
-  let fixture: ComponentFixture<SubjectDataComponent>;
+describe('SelectAssignmentComponent', () => {
+  let component: SelectAssignmentComponent;
+  let fixture: ComponentFixture<SelectAssignmentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SubjectDataComponent]
+      imports: [SelectAssignmentComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(SubjectDataComponent);
+    fixture = TestBed.createComponent(SelectAssignmentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

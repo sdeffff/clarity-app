@@ -3,17 +3,18 @@
     *ngIf="isEmpty"
     class="no-material-txt">
         <p>There are no assigments for this subject, but you can add the first one!</p>
-        <a 
-        mat-flat-button
-        href="">Add a material</a>
+        <button mat-flat-button
+        (click)="openDialogWindow()"
+        href="">Add a material</button>
 
         <form>
             <input 
             name="file"
             (change)="onFileSelected($event)"
+            accept="image/png, image/gif, image/jpeg"
             type="file">
 
-            <button (click)="uploadImg($event)">asd</button>
+            <button (click)="uploadAssignment($event)">asd</button>
         </form>
 
     </article>

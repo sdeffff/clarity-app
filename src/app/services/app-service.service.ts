@@ -21,7 +21,7 @@ export class AppService {
   ) {};
 
   //Method to get all of the universities and their info
-  getUnis(): Observable<universityModel[]> {
+  getUnisData(): Observable<universityModel[]> {
     return this.http.get<universityModel[]>(`${environment.apiUrl}/unis`);
   }
 
@@ -58,7 +58,7 @@ export class AppService {
       formData
     )
   }
-
+  
   addAssignmentDataToDB(data: subjectDataModel): Observable<any> {
     let httpOptions = {
       headers: this.headerBuilder.addContentType().build(),
