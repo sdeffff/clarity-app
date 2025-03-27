@@ -27,15 +27,6 @@ export class AppService {
 
   /**
    * 
-   * @param uni - current university
-   * @returns an Observable where stored faculties list and info about them (like year and seasons)
-   */
-  getUniInfo(uni: string): Observable<universityModel[]> {
-    return this.http.get<universityModel[]>(`${environment.apiUrl}/${uni}/info`);
-  }
-
-  /**
-   * 
    * @param apiData - array of data to get sibjects fot the exact uni, faculty, year and season
    * @returns an Observable of subject list, faculty, year and season where this subjects are
    */

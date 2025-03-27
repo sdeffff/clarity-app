@@ -1,3 +1,4 @@
+$purple: #4E6AF0;
 $black: #191D21;
 $grey: #656F77;
 
@@ -34,9 +35,48 @@ header {
     }
 
     mat-form-field {
+        min-height: 50px !important;
+        padding-block: .25rem !important;
+        width: 28rem !important;
+
         input {
+            height: 60px !important;
+        }
+
+        /* Input styles */
+        .mdc-text-field--filled .mdc-floating-label {
+            font-family: 'Kinetika' !important;
+        }
+        
+        .mat-mdc-form-field-subscript-wrapper, .mat-mdc-form-field-bottom-align::before {
+            display: none !important;
+        }
+        
+        .mdc-text-field--filled:not(.mdc-text-field--disabled) {
             height: 50px !important;
-        } 
+        }
+        
+        .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+            font-family: 'Kinetika' !important;
+            color: $black !important;
+            caret-color: $purple !important;
+        }
+        
+        //Label: 
+        .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+            top: calc(var(--mat-form-field-container-height)/2.35) !important;
+        }
+        
+        //Input
+        .mdc-text-field--filled, 
+        .mdc-text-field {
+            border-top-left-radius: .25rem !important;
+            border-top-right-radius: .25rem !important;
+            border-bottom-left-radius: .25rem !important;
+            border-bottom-right-radius: .25rem !important;
+        
+            border: 1px solid $grey !important;
+        }
     }
 
     div {

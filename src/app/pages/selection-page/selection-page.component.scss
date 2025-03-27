@@ -1,9 +1,13 @@
+$purple: #4E6AF0;
+$black: #191D21;
+$grey: #656F77;
+
 section {
     article {
         display: none;
     }
 
-    div {
+    main {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -21,18 +25,27 @@ section {
     
         ul {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             place-items: center;
-            gap: 2rem;
+            gap: 1.75rem;
 
             li {
-                a {
-                    font-size: 1.75rem;
-                    font-weight: 600;
-
-                    padding: 3rem 3.25rem;
-                    border-radius: 2rem !important;
+                select {
+                    width: 200px !important;
                 }
+            }
+        }
+
+        a {
+            font-size: 1.25rem;
+            font-weight: 600;
+
+            padding: 1.5rem 2rem;
+            border-radius: .75rem !important;
+
+            &[disabled] {
+                color: $grey !important;
+                background-color: #3649a9 !important;
             }
         }
     }

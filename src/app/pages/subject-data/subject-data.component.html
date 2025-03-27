@@ -22,7 +22,7 @@
         <li *ngFor="let subjectData of data.length > 0 ? data : []">
             <figure>
                 <p>{{subjectData.assignmentmedia}}</p>
-                <!-- <img src=""> -->
+                    <img src="{{subjectData.assignmentmedia}}">
             
                 <figcaption>{{subjectData.assignmentname}}</figcaption>
             </figure>
