@@ -1,0 +1,16 @@
+<section id="selection-section">
+    <ul>
+        <li
+        *ngFor="let subject of data.length !== 0 && data[0].subjects.length !== 0 ? data[0].subjects : []">
+
+        <div>
+            <a 
+            mat-flat-button
+            href="{{urlData[0]}}/{{urlData[1]}}/{{urlData[2]}}/{{urlData[3]}}/select-assignment/{{subject}}">
+                {{subject}}
+            </a>
+        </div>
+
+        </li>
+    </ul>
+</section>

@@ -1,0 +1,75 @@
+<section id="selection-section">
+    <article
+    *ngIf="this.errMessage">
+        <h2>Happened some error with the server, try later please</h2>
+    
+        <h1>:(</h1>
+    </article>
+
+    <main>
+        <ul>
+            <li>
+                <mat-form-field>
+                    <mat-select 
+                    placeholder="Select your uni"
+                    name="uni"
+                    #uni="ngModel"
+                    [(ngModel)]="selectedData.uni"
+                    (selectionChange)="addFaculties(data, $event.value)"
+                    required>
+                        <mat-option *ngFor="let uni of unis.length > 0 ? unis : []" 
+                            [value]="uni">{{uni}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </li>
+            
+            <li>
+                <mat-form-field>
+                    <mat-select
+                    placeholder="Select faculty"
+                    name="faculty"
+                    #faculty="ngModel"
+                    [(ngModel)]="selectedData.faculty"
+                    required>
+                        <mat-option *ngFor="let faculty of currentFaculties.length > 0 ? currentFaculties : []" 
+                            [value]="faculty">{{faculty.toUpperCase()}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </li>
+            
+            <li>
+                <mat-form-field>
+                    <mat-select
+                    placeholder="Select year"
+                    name="year"
+                    #year="ngModel"
+                    [(ngModel)]="selectedData.year"
+                    required>
+                        <mat-option *ngFor="let year of years" 
+                            [value]="year">{{year}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </li>
+            
+            <li>
+                <mat-form-field>
+                    <mat-select
+                    placeholder="Select season"
+                    name="season"
+                    #season="ngModel"
+                    [(ngModel)]="selectedData.season"
+                    required>
+                        <mat-option *ngFor="let season of seasons" 
+                            [value]="season">{{season}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </li>
+        </ul>
+
+        <a
+        mat-flat-button
+        [disabled]="uni.value == '' || faculty.value == '' || year.value == '' || season.value == ''"
+        href="/{{selectedData.uni}}/{{selectedData.faculty.toLowerCase()}}/{{selectedData.year.toLowerCase()}}/{{selectedData.season.toLowerCase()}}/select-subject">
+        Show me</a>
+    </main>
+</section>

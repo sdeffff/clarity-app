@@ -70,6 +70,16 @@ $custom-theme: mat.define-light-theme((
 
 //--
 
+//For mat-fab button: 
+html .mat-mdc-fab.mat-accent, 
+body .mat-mdc-fab.mat-accent, 
+html .mat-mdc-fab-extended.mat-accent, 
+body .mat-mdc-fab-extended.mat-accent { 
+  background-color: #4E6AF0 !important;
+}
+
+//--
+
 /* Input styles */
 .mdc-text-field--filled .mdc-floating-label {
   font-family: 'Kinetika' !important;
@@ -105,11 +115,15 @@ $custom-theme: mat.define-light-theme((
   border: 1px solid $grey !important;
 }
 
-.mat-mdc-form-field-infix {
-  min-height: 50px !important;
-  padding-block: .25rem !important;
-  width: 28rem !important;
+.mdc-text-field--no-label .mat-mdc-form-field-infix {
+  padding-top: var(--mat-form-field-container-vertical-padding) !important;
+  padding-bottom: var(--mat-form-field-container-vertical-padding) !important;
 }
+
+.mat-mdc-form-field-infix {
+  padding: 0 !important;
+}
+
 
 html, body {
   @include mat.all-component-themes($custom-theme);
