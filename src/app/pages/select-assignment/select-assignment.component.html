@@ -5,28 +5,34 @@
         <p>There are no assigments for this subject, but you can add the first one!</p>
         <button mat-flat-button
         (click)="openDialogWindow()"
-        href="">Add a material</button>
-
-        <form>
-            <input 
-            name="file"
-            (change)="onFileSelected($event)"
-            accept="image/png, image/gif, image/jpeg"
-            type="file">
-
-            <button (click)="uploadAssignment($event)">asd</button>
-        </form>
-
+        class="add-material-btn"
+        >Add a material</button>
+        
     </article>
 
     <ul>
         <li *ngFor="let subjectData of data.length > 0 ? data : []">
             <figure>
-                <p>{{subjectData.assignmentmedia}}</p>
-                    <img src="{{subjectData.assignmentmedia}}">
+                <div>
+                    <img
+                    src="{{subjectData.assignmentmedia}}">
+                </div>
             
                 <figcaption>{{subjectData.assignmentname}}</figcaption>
             </figure>
         </li>
     </ul>
+
+    <footer *ngIf="!isEmpty">
+        <article 
+        *ngIf="!isEmpty"
+        class="no-material-txt">
+            <p>You can help other students by adding assignment for this subject</p>
+            <button mat-flat-button
+            (click)="openDialogWindow()"
+            class="add-material-btn footer"
+            >Add a material</button>
+    
+        </article>
+    </footer>
 </section>

@@ -36,8 +36,6 @@ export class SelectAssignmentComponent {
   protected data: subjectDataModel[] = [];
   protected isEmpty: boolean = false;
 
-  protected selectedFile: File | null = null;
-
   private ngOnInit(): void {
     if(this.checkRoute()) {
       this.fetchSubjectData();
@@ -54,7 +52,6 @@ export class SelectAssignmentComponent {
     private fetchSubjectData(): void {
       let subjectName = this.getUrlData()[4];
   
-  
       this.service.getSubjectData(subjectName).subscribe({
         next: (res) => {
           if(res.length > 0) this.data = res;
@@ -62,58 +59,11 @@ export class SelectAssignmentComponent {
         },
   
         error: (err) => {
+          this.isEmpty = true;
           console.log(err);
         }
       })
     }
-
-  /**
-   * Function to upload assignment data to database
-   * 
-   * @param e - event of the clicked button to prevent page refrseshing
-   * @returns 
-   */
-  protected uploadAssignment(e: Event) {
-    e.preventDefault();
-    
-    if(!this.selectedFile) {
-      alert("Please select an image to upload!");
-      return;
-    }
-
-    const urlData = this.getUrlData();
-    const subjectName = urlData[urlData.length - 1];
-
-    this.service.addSubjectMaterialToStorage(this.selectedFile!, subjectName).pipe(
-      concatMap((res) => {
-        const passingData = {
-          uni: urlData[0],
-          subject: subjectName,
-          assignmentname: "asd",  
-          assignmentmedia: res.fileUrl,
-        };
-
-        return this.service.addAssignmentDataToDB(passingData);
-      })
-    ).subscribe({
-      error: (err) => {
-        console.error(err);
-      }
-    })
-  }
-
-  /**
-   * 
-   * Function to get the chosen image as file and save it in variable
-   * @param event - to get the file from input type='file';
-   */
-  protected onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-      console.log(this.selectedFile);
-    }
-  }
 
   /**
    * Helper function to get URL params
@@ -168,8 +118,8 @@ export class SelectAssignmentComponent {
   //Functions for angular material popup:
   protected openDialogWindow() {
     this.dialog.open(SubjectPopupComponent, {
-      width: "60%",
-      height: "400px",
+      width: "550px",
+      height: "500px",
     });
   }
 }

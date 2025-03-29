@@ -7,7 +7,7 @@ import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormField } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 
 import { ActivatedRoute } from '@angular/router';
 
