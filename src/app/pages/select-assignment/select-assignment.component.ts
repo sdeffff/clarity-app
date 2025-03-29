@@ -119,7 +119,7 @@ export class SelectAssignmentComponent {
   protected openDialogWindow() {
     this.dialog.open(SubjectPopupComponent, {
       width: "550px",
-      height: "500px",
+      height: "475px",
     });
   }
 }

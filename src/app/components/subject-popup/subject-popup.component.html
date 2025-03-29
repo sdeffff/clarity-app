@@ -1,4 +1,12 @@
 <section>
+    <div 
+    *ngIf="handleLoader"
+    class="loader-wrapper">
+        <div>
+            <div class="loader"></div>
+        </div>
+    </div>
+
     <h2>Add an assignment for <br> {{currentSubject}}</h2>
 
     <form>

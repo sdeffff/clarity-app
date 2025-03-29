@@ -37,6 +37,7 @@ export class SubjectPopupComponent {
   protected currentSubject: string | null = null;
 
   protected handleFileUpload: boolean = false;
+  protected handleLoader: boolean = false;
 
   ngOnInit() {
     this.urlData = this.router.url.split("/")
@@ -65,21 +66,18 @@ export class SubjectPopupComponent {
       return;
     }
 
+    this.handleLoader = true;
+
     const subjectName = this.urlData[this.urlData.length - 1];
-    const passingData = {
-      uni: this.urlData[0],
-      subject: subjectName,
-      assignmentname: this.assignmentName,  
-      assignmentmedia: this.assignmentMedia,
-    };
     
     this.service.addSubjectMaterialToStorage(this.assignmentMedia!, subjectName).pipe(
       concatMap((res) => {
         const passingData = {
           uni: this.urlData[0],
           subject: subjectName,
-          assignmentname: this.assignmentName,  
+          assignmentname: this.assignmentName,
           assignmentmedia: res.fileUrl,
+          author: "anonymous",
         };
 
         return this.service.addAssignmentDataToDB(passingData);
@@ -90,6 +88,7 @@ export class SubjectPopupComponent {
       },
 
       error: (err) => {
+        //show an error window that occured some problem with uploading assignment to database
         console.error(err);
       }
     })
