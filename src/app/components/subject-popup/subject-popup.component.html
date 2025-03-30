@@ -1,3 +1,59 @@
-<form>
+<section>
+    <div 
+    *ngIf="handleLoader"
+    class="loader-wrapper">
+        <div>
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <h2>Add an assignment for <br> {{currentSubject}}</h2>
+
+    <form>
+        <mat-form-field>
+            <mat-label>Name of the assignment</mat-label>
+            <input 
+            matInput 
+            placeholder="F.e. first homework Algebra(1) 2014"
+            name="assignmentName" 
+            type="text" 
+            [(ngModel)]="assignmentName" 
+            required=""
+            >
+        </mat-form-field>
     
-</form>
+        <label 
+        for="input-file" 
+        id="drop-area"
+        >
+            <input 
+            id="input-file"
+            name="file"
+            (change)="onFileSelected($event)"   
+            accept="image/*, application/pdf, application/vnd.ms-excel"
+            type="file"
+            hidden
+            required>
+
+            <div 
+            *ngIf="!handleFileUpload"
+            id="drop-info">
+                <img src="../../../assets/icons/upload-icon.png">
+                <p><span>Drag & drop</span> or <span>click here</span> to <br> upload the file</p>
+            </div>
+
+            <div
+            id="success-drop"
+            *ngIf="handleFileUpload">
+                <img src="../../../assets/icons/success-icon.png">
+                <p>Your file successfully uploaded, press the button below!</p>
+            </div>
+        </label>
+
+    
+        <button 
+        mat-flat-button 
+        (click)="uploadAssignment($event)"
+        [disabled]="assignmentName == '' || assignmentMedia == null">Upload</button>
+    </form>
+</section>

@@ -64,11 +64,7 @@ export class AppService {
       headers: this.headerBuilder.addContentType().build(),
     };
 
-    return this.http.post<any>(`${environment.apiUrl}/${data.uni}/subject-data/${data.subject}`, {
-      subject: data.subject,
-      assignmentname: data.assignmentname,
-      assignmentmedia: data.assignmentmedia,
-    },
+    return this.http.post<any>(`${environment.apiUrl}/${data.uni}/subject-data/${data.subject}`, data,
     httpOptions
     )
   }
