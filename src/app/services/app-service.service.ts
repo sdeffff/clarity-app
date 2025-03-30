@@ -10,6 +10,7 @@ import { HttpHeaderBuilderService } from './http-header-builder.service';
 import { universityModel } from '../models/university.model';
 import { facultySubjects } from '../models/faculty-subjects.model';
 import { subjectDataModel } from '../models/subject-data.model';
+import { assignmentModel } from '../models/assignment-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -67,5 +68,9 @@ export class AppService {
     return this.http.post<any>(`${environment.apiUrl}/${data.uni}/subject-data/${data.subject}`, data,
     httpOptions
     )
+  }
+
+  getAssignmentDataFromDB(assignmentData: {uni: string, subject: string, assignmentname: string}): Observable<assignmentModel[]> {
+    return this.http.get<assignmentModel[]>(`${environment.apiUrl}/${assignmentData.uni}/${assignmentData.subject}/${assignmentData.assignmentname}`);
   }
 }
