@@ -1,4 +1,10 @@
-<section id="selection-section">
+<app-preloader
+*ngIf="isLoading"
+></app-preloader>
+
+<section 
+*ngIf="!isLoading"
+id="selection-section">
     <article>
         <h1>Clarity – The Smarter Way to Learn 📚</h1>
 
