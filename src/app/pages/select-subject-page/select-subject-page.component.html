@@ -1,4 +1,10 @@
-<section id="selection-section">
+<app-preloader
+*ngIf="isLoading"
+></app-preloader>
+
+<section 
+*ngIf="!isLoading"
+id="selection-section">
     <ul>
         <li
         *ngFor="let subject of data.length !== 0 && data[0].subjects.length !== 0 ? data[0].subjects : []">

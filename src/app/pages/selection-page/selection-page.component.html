@@ -1,4 +1,9 @@
-<section id="selection-section">
+<app-preloader
+*ngIf="isLoading"
+></app-preloader>
+
+<section 
+id="selection-section">
     <article
     *ngIf="this.errMessage">
         <h2>Happened some error with the server, try later please</h2>

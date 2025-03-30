@@ -16,8 +16,4 @@ export class AppComponent {
   constructor (private title: Title) {
     this.title.setTitle("Clarity ✨");
   };
-
-  onActivate(event: Event) {
-    window.scroll(0,0)
- }
 }
