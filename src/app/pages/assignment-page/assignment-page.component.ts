@@ -2,6 +2,8 @@ import { Component, AfterViewInit } from '@angular/core';
 
 import { Location } from '@angular/common';
 
+import { MatButton, MatButtonModule } from '@angular/material/button';
+
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AppService } from '../../services/app-service.service';
@@ -11,7 +13,7 @@ import { assignmentModel } from '../../models/assignment-data.model';
 @Component({
   selector: 'app-assignment-page',
   standalone: true,
-  imports: [],
+  imports: [MatButton, MatButtonModule],
   providers: [AppService],
   templateUrl: './assignment-page.component.html',
   styleUrl: './assignment-page.component.scss'

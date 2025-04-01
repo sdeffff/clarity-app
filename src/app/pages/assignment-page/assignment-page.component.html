@@ -1,11 +1,28 @@
 <section>
     <main>
-        <img src="{{data[0].assignmentmedia}}">
+        <img 
+        class="assignment-preview"
+        src="{{data[0].assignmentmedia}}">
 
         <article>
-            <h2>{{data[0].assignmentname}}</h2>
+            <div>
+                <img src="../../../assets/icons/account-icon.svg" alt="">
 
-            <p>{{data[0].author}}</p>
+                <p>{{data[0].author}}</p>
+            </div>
+
+
+            <div>
+                <h2>{{data[0].assignmentname}}</h2>
+
+                <a mat-stroked-button href="" download="{{data[0].assignmentmedia}}">
+                    <div>
+                        <p>Download Assignment</p>
+
+                        <img src="../../../assets/icons/download-icon.png" alt="">
+                    </div>
+                </a>
+            </div>
         </article>
     </main>
 </section>
