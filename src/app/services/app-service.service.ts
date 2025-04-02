@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
@@ -60,6 +60,11 @@ export class AppService {
     )
   }
   
+  /**
+   * 
+   * @param data - data of assignment we want to add to our database (subject, name, media, author)
+   * @returns an observalbe that posts the data
+   */
   addAssignmentDataToDB(data: subjectDataModel): Observable<any> {
     let httpOptions = {
       headers: this.headerBuilder.addContentType().build(),
@@ -70,7 +75,33 @@ export class AppService {
     )
   }
 
+  /**
+   * Function to get the data about current assignment from database, depending on assignmentname, subject and uni
+   * 
+   * @param assignmentData - current uni, subject and assignment name depedning on which we will be
+   * able to get the remaining data from database
+   * @returns an observalbe with array where our assignment data will be stored
+   */
   getAssignmentDataFromDB(assignmentData: {uni: string, subject: string, assignmentname: string}): Observable<assignmentModel[]> {
     return this.http.get<assignmentModel[]>(`${environment.apiUrl}/${assignmentData.uni}/${assignmentData.subject}/${assignmentData.assignmentname}`);
   }
+
+  /**
+   * Function to
+   * 
+   * @param fileUrl - url string of file we want to get file size of
+   * 
+   * @returns a Observable with http header response which returns us a content-length of fileUrl
+   */
+  getImageSize(fileUrl: string): Observable<HttpResponse<any>> {
+    return this.http.head(fileUrl, { 
+      observe: 'response',
+      transferCache: { includeHeaders: ['content-length'] }
+    })
+  }
+
+  // .subscribe(response => {
+  //   const size = response.headers.get('content-length');
+  //   return size ? (parseInt(size) / 1024).toFixed(2) + 'KB' : '';
+  // });
 }

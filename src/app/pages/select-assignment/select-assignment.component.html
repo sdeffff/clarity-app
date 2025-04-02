@@ -3,7 +3,7 @@
 ></app-preloader>
 
 <section
-*ngIf="!isLoading"
+*ngIf="!isLoading && !isEmpty"
 id="selection-section">
     <article 
     *ngIf="isEmpty"
@@ -13,7 +13,6 @@ id="selection-section">
         (click)="openDialogWindow()"
         class="add-material-btn"
         >Add a material</button>
-        
     </article>
 
     <ul>

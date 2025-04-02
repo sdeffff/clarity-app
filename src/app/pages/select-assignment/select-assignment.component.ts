@@ -8,6 +8,8 @@ import { NgFor, NgIf, Location } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
+import dialogConfig from '../../models/dialogConfig.config';
+
 import { AppService } from '../../services/app-service.service';
 
 import { subjectDataModel } from '../../models/subject-data.model';
@@ -17,6 +19,7 @@ import { numToStringMap } from '../../models/numToString.model';
 import { SubjectPopupComponent } from '../../components/subject-popup/subject-popup.component';
 
 import { PreloaderComponent } from '../technical/preloader/preloader.component';
+import { ErrorComponent } from '../technical/error/error.component';
 
 @Component({
   selector: 'app-select-assignment',
@@ -42,6 +45,7 @@ export class SelectAssignmentComponent implements AfterViewInit {
 
   protected urlData: string[] = [];
 
+  protected isError: boolean = true;
   protected isLoading: boolean = true;
 
   ngAfterViewInit() {
@@ -52,20 +56,28 @@ export class SelectAssignmentComponent implements AfterViewInit {
 
   private ngOnInit(): void {
     if(this.checkRoute()) {
-      this.fetchSubjectData();
+      this.isError = false;
+
+      try {
+        this.fetchSubjectData();
+      } catch (err) {
+        this.dialog.open(ErrorComponent, dialogConfig);
+        this.dialog.afterAllClosed.subscribe(() => this.location.back());
+      }
     } else {
-      alert("Wrong URL!");
-      this.location.back();
+      this.isError = true;
     }
   }
 
   /**
-   * A function to get the data from the server
+   * A function to get the data stream of all the assignments for the chosen subject
    * 
    */
     private fetchSubjectData(): void {
       let subjectName = this.getUrlData()[4];
-  
+      
+      throw new Error("asd");
+
       this.service.getSubjectData(subjectName).subscribe({
         next: (res) => {
           if(res.length > 0) this.data = res;
@@ -73,7 +85,7 @@ export class SelectAssignmentComponent implements AfterViewInit {
         },
   
         error: (err) => {
-          this.isEmpty = true;
+          this.isError = true;
           console.log(err);
         }
       })
@@ -121,6 +133,9 @@ export class SelectAssignmentComponent implements AfterViewInit {
       },
 
       error: (err) => {
+        this.dialog.open(ErrorComponent, dialogConfig);
+        this.dialog.afterAllClosed.subscribe(() => this.location.back());
+
         console.error(err);
         isOkay = false;
       }

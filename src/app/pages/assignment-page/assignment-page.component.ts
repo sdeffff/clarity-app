@@ -2,6 +2,8 @@ import { Component, AfterViewInit, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
 
+import { HttpClient } from '@angular/common/http';
+
 import { MatButton, MatButtonModule } from '@angular/material/button';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,7 +15,7 @@ import { assignmentModel } from '../../models/assignment-data.model';
 @Component({
   selector: 'app-assignment-page',
   standalone: true,
-  imports: [MatButton, MatButtonModule, FormsModule],
+  imports: [MatButtonModule, FormsModule],
   providers: [AppService],
   templateUrl: './assignment-page.component.html',
   styleUrl: './assignment-page.component.scss'
@@ -24,6 +26,7 @@ export class AssignmentPageComponent {
     private acitveRouter: ActivatedRoute,
     private router: Router,
     private location: Location,
+    private http: HttpClient,
   ) { };
 
   protected data: assignmentModel[] = [];
@@ -33,6 +36,12 @@ export class AssignmentPageComponent {
     assignmentname: "",
   };
 
+  /**
+   * When the component mounts we getting the data from url string this component based on
+   * and depending on the data we will get - fetching all of the current assignment's data
+   * from database
+   * 
+   */
   ngOnInit(): void {
     this.getUrlData();
 
@@ -45,12 +54,15 @@ export class AssignmentPageComponent {
       }, 50);
     }
 
+    //Getting the remaining data to add to the assignment page like author name and media
     this.service.getAssignmentDataFromDB(this.urlData).subscribe({
       next: (res) => {
         if(res.length === 0) {
           this.location.back();
         } else {
           this.data = res;
+
+          this.getImageSize(res[0].assignmentmedia);
         }
       },
 
@@ -61,6 +73,7 @@ export class AssignmentPageComponent {
     });
   }
 
+  //Helper function to get the values of the url value and then use them
   private getUrlData() {
     this.acitveRouter.paramMap.subscribe(params => {
       this.urlData.uni = params.get("uni")!;
@@ -69,19 +82,34 @@ export class AssignmentPageComponent {
     })
   }
 
+  //Function to check that everything is okay, and client didn't wrote some random stuff in url
   private checkRoute() {
 
   }
 
-  //Functions to handle zoom on the image:
+  //------
+  //Functionality to handle image zoom
 
   //Varialbes to handle functionality:
   private width: number = 0; 
   private height: number = 0;
   private eventImg!: HTMLImageElement;
+  protected fileSize: string = "";
+
+
+  //Call this function from service!
+  protected getImageSize(imgUrl: string) {
+    this.http.head(imgUrl, { 
+      observe: 'response',
+      transferCache: { includeHeaders: ['content-length'] }
+    }).subscribe(response => {
+      const size = response.headers.get('content-length');
+      this.fileSize = size ? (parseInt(size) / 1024).toFixed(2) + 'KB' : '';
+    });
+  }
 
   protected handleMouseEnter(event: MouseEvent) {
-    this.eventImg = event.srcElement as HTMLImageElement;
+    this.eventImg = event.srcElement as HTMLImageElement
 
     this.width = this.eventImg.clientWidth;
     this.height = this.eventImg.clientHeight;

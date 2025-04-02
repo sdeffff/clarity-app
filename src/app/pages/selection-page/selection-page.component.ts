@@ -5,13 +5,20 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
+
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+
+//Config for Dialog window:
+import dialogConfig from '../../models/dialogConfig.config';
 
 import { AppService } from '../../services/app-service.service';
 
 import { selectedDataModel } from '../../models/selected-data.model';
 import { universityModel } from '../../models/university.model';
+
+import { ErrorComponent } from '../technical/error/error.component';
 
 @Component({
   selector: 'app-selection-page',
@@ -26,6 +33,7 @@ import { universityModel } from '../../models/university.model';
 export class SelectionPageComponent {
   constructor(private service: AppService,
     private router: Router,
+    private dialog: MatDialog,
   ) {};
 
   //Variables for fetched data:
@@ -36,9 +44,7 @@ export class SelectionPageComponent {
 
   protected data: universityModel[] = [];
 
-  //Params for err message:
-  protected errMessage: boolean = true;
-  protected errStyles: string = "display: none";
+  protected isError: boolean = true;
 
   //Object for client's selected data:
   protected selectedData: selectedDataModel = {
@@ -54,6 +60,8 @@ export class SelectionPageComponent {
     this.service.getUnisData().subscribe({
       next: (res) => {
         this.data = res;
+
+        this.isError = false;
 
         this.setData(this.data);
       },
