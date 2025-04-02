@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { NgFor, NgIf, Location } from '@angular/common';
+import { AfterViewInit } from '@angular/core';
+
+import { NgFor, NgIf } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -14,17 +16,19 @@ import { numToStringMap } from '../../models/numToString.model';
 //Popup window:
 import { SubjectPopupComponent } from '../../components/subject-popup/subject-popup.component';
 
+import { PreloaderComponent } from '../technical/preloader/preloader.component';
+
 @Component({
   selector: 'app-select-assignment',
   standalone: true,
-  imports: [NgFor, NgIf, MatButtonModule, MatDialogModule],
+  imports: [NgFor, NgIf, MatButtonModule, MatDialogModule, PreloaderComponent],
   providers: [AppService],
   templateUrl: './select-assignment.component.html',
   styleUrl: './select-assignment.component.scss'
 })
 
 //Page where user selects Assignments and other stuff for already selected subject
-export class SelectAssignmentComponent {
+export class SelectAssignmentComponent implements AfterViewInit {
   constructor(
     private service: AppService,
     private activeRouter: ActivatedRoute,
@@ -37,6 +41,14 @@ export class SelectAssignmentComponent {
   protected isEmpty: boolean = false;
 
   protected urlData: string[] = [];
+
+  protected isLoading: boolean = true;
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
+  }
 
   private ngOnInit(): void {
     if(this.checkRoute()) {
