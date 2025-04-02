@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AfterViewInit } from '@angular/core';
-
 import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
@@ -20,21 +18,19 @@ import { AppService } from '../../services/app-service.service';
 import { selectedDataModel } from '../../models/selected-data.model';
 import { universityModel } from '../../models/university.model';
 
-import { PreloaderComponent } from '../technical/preloader/preloader.component';
-
 import { ErrorComponent } from '../technical/error/error.component';
 
 @Component({
   selector: 'app-selection-page',
   standalone: true,
-  imports: [HttpClientModule, MatDialogModule, NgFor, MatButtonModule, NgIf, MatSelectModule, FormsModule, PreloaderComponent],
+  imports: [HttpClientModule, NgFor, MatButtonModule, NgIf, MatSelectModule, FormsModule],
   providers: [AppService],
   templateUrl: './selection-page.component.html',
   styleUrl: './selection-page.component.scss'
 })
 
 //The start page where we choosing our uni, faculty, year and season
-export class SelectionPageComponent implements AfterViewInit {
+export class SelectionPageComponent {
   constructor(private service: AppService,
     private router: Router,
     private dialog: MatDialog,
@@ -50,8 +46,6 @@ export class SelectionPageComponent implements AfterViewInit {
 
   protected isError: boolean = true;
 
-  protected isLoading: boolean = true;
-
   //Object for client's selected data:
   protected selectedData: selectedDataModel = {
     uni: "",
@@ -59,12 +53,6 @@ export class SelectionPageComponent implements AfterViewInit {
     year: "",
     season: "",
   };
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 800);
-  }
 
   //Function to get all of the information from db
   private getFullInfo(): void {
@@ -80,11 +68,8 @@ export class SelectionPageComponent implements AfterViewInit {
 
       error: (err) => {
         console.error(err);
-        this.isLoading = false;
-        this.isError = true;
 
-        this.dialog.open(ErrorComponent, dialogConfig);
-        this.dialog.afterAllClosed.subscribe(() => this.router.navigate(["/"]));
+        alert("asd");
       }
     });
   };
