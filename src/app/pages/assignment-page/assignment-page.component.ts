@@ -1,5 +1,5 @@
-import { Component, AfterViewInit } from '@angular/core';
-
+import { Component, AfterViewInit, } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
 
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -13,7 +13,7 @@ import { assignmentModel } from '../../models/assignment-data.model';
 @Component({
   selector: 'app-assignment-page',
   standalone: true,
-  imports: [MatButton, MatButtonModule],
+  imports: [MatButton, MatButtonModule, FormsModule],
   providers: [AppService],
   templateUrl: './assignment-page.component.html',
   styleUrl: './assignment-page.component.scss'
@@ -33,7 +33,7 @@ export class AssignmentPageComponent {
     assignmentname: "",
   };
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getUrlData();
 
     const waitForData = () => {
@@ -72,4 +72,29 @@ export class AssignmentPageComponent {
   private checkRoute() {
 
   }
+
+  //Functions to handle zoom on the image:
+
+  //Varialbes to handle functionality:
+  private width: number = 0; 
+  private height: number = 0;
+  private eventImg!: HTMLImageElement;
+
+  protected handleMouseEnter(event: MouseEvent) {
+    this.eventImg = event.srcElement as HTMLImageElement;
+
+    this.width = this.eventImg.clientWidth;
+    this.height = this.eventImg.clientHeight;
+  }
+
+  protected handleMouseMove(event: MouseEvent) {
+    const horizontal = (event.offsetX) / this.width*100;
+    const vertical = (event.offsetY) / this.height*100;
+
+    this.eventImg.style.setProperty('--x', horizontal + '%');
+    this.eventImg.style.setProperty('--y', vertical + '%');
+  }
+
+  //At first I had a problem that I was using event.x that was relative to the position of the cursor
+  //to the whole page, not the image, but I fixed it by using offset property
 }

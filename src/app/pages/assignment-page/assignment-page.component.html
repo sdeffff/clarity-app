@@ -1,8 +1,14 @@
 <section>
     <main>
-        <img 
-        class="assignment-preview"
-        src="{{data[0].assignmentmedia}}">
+        <div 
+        #assignmentMedia
+        class="image-container">
+            <img
+            (mouseenter)="handleMouseEnter($event)"
+            (mousemove)="handleMouseMove($event)"
+            class="assignment-preview"
+            src="{{data[0].assignmentmedia}}">
+        </div>
 
         <article>
             <div>
