@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AfterViewInit } from '@angular/core';
-
 import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
@@ -15,19 +13,17 @@ import { AppService } from '../../services/app-service.service';
 import { selectedDataModel } from '../../models/selected-data.model';
 import { universityModel } from '../../models/university.model';
 
-import { PreloaderComponent } from '../technical/preloader/preloader.component';
-
 @Component({
   selector: 'app-selection-page',
   standalone: true,
-  imports: [HttpClientModule, NgFor, MatButtonModule, NgIf, MatSelectModule, FormsModule, PreloaderComponent],
+  imports: [HttpClientModule, NgFor, MatButtonModule, NgIf, MatSelectModule, FormsModule],
   providers: [AppService],
   templateUrl: './selection-page.component.html',
   styleUrl: './selection-page.component.scss'
 })
 
 //The start page where we choosing our uni, faculty, year and season
-export class SelectionPageComponent implements AfterViewInit {
+export class SelectionPageComponent {
   constructor(private service: AppService,
     private router: Router,
   ) {};
@@ -44,8 +40,6 @@ export class SelectionPageComponent implements AfterViewInit {
   protected errMessage: boolean = true;
   protected errStyles: string = "display: none";
 
-  protected isLoading: boolean = true;
-
   //Object for client's selected data:
   protected selectedData: selectedDataModel = {
     uni: "",
@@ -53,12 +47,6 @@ export class SelectionPageComponent implements AfterViewInit {
     year: "",
     season: "",
   };
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 800);
-  }
 
   //Function to get all of the information from db
   private getFullInfo(): void {
@@ -72,7 +60,7 @@ export class SelectionPageComponent implements AfterViewInit {
 
       error: (err) => {
         console.error(err);
-        this.isLoading = false;
+
         alert("asd");
       }
     });
