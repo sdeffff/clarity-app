@@ -3,14 +3,8 @@
 ></app-preloader>
 
 <section 
+*ngIf="!isLoading && !isError"
 id="selection-section">
-    <article
-    *ngIf="this.errMessage">
-        <h2>Happened some error with the server, try later please</h2>
-    
-        <h1>:(</h1>
-    </article>
-
     <main>
         <ul>
             <li>

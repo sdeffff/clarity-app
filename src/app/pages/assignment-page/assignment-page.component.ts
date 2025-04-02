@@ -15,7 +15,7 @@ import { assignmentModel } from '../../models/assignment-data.model';
 @Component({
   selector: 'app-assignment-page',
   standalone: true,
-  imports: [MatButton, MatButtonModule, FormsModule],
+  imports: [MatButtonModule, FormsModule],
   providers: [AppService],
   templateUrl: './assignment-page.component.html',
   styleUrl: './assignment-page.component.scss'

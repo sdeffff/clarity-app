@@ -7,8 +7,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
+
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+
+//Config for Dialog window:
+import dialogConfig from '../../models/dialogConfig.config';
 
 import { AppService } from '../../services/app-service.service';
 
@@ -17,10 +22,12 @@ import { universityModel } from '../../models/university.model';
 
 import { PreloaderComponent } from '../technical/preloader/preloader.component';
 
+import { ErrorComponent } from '../technical/error/error.component';
+
 @Component({
   selector: 'app-selection-page',
   standalone: true,
-  imports: [HttpClientModule, NgFor, MatButtonModule, NgIf, MatSelectModule, FormsModule, PreloaderComponent],
+  imports: [HttpClientModule, MatDialogModule, NgFor, MatButtonModule, NgIf, MatSelectModule, FormsModule, PreloaderComponent],
   providers: [AppService],
   templateUrl: './selection-page.component.html',
   styleUrl: './selection-page.component.scss'
@@ -30,6 +37,7 @@ import { PreloaderComponent } from '../technical/preloader/preloader.component';
 export class SelectionPageComponent implements AfterViewInit {
   constructor(private service: AppService,
     private router: Router,
+    private dialog: MatDialog,
   ) {};
 
   //Variables for fetched data:
@@ -40,9 +48,7 @@ export class SelectionPageComponent implements AfterViewInit {
 
   protected data: universityModel[] = [];
 
-  //Params for err message:
-  protected errMessage: boolean = true;
-  protected errStyles: string = "display: none";
+  protected isError: boolean = true;
 
   protected isLoading: boolean = true;
 
@@ -67,13 +73,18 @@ export class SelectionPageComponent implements AfterViewInit {
       next: (res) => {
         this.data = res;
 
+        this.isError = false;
+
         this.setData(this.data);
       },
 
       error: (err) => {
         console.error(err);
         this.isLoading = false;
-        alert("asd");
+        this.isError = true;
+
+        this.dialog.open(ErrorComponent, dialogConfig);
+        this.dialog.afterAllClosed.subscribe(() => this.router.navigate(["/"]));
       }
     });
   };
