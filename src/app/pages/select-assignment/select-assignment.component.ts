@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AfterViewInit } from '@angular/core';
 
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, Location } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
