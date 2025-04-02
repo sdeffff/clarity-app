@@ -14,6 +14,10 @@ export class HttpHeaderBuilderService {
     return this;
   }
 
+  // addAuthorization(): HttpHeaderBuilderService {
+  //   this.headers = this.headers.set('')
+  // }
+
   build(): HttpHeaders {
     return this.headers;
   }

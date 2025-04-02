@@ -60,7 +60,7 @@ export class SelectAssignmentComponent implements AfterViewInit {
   }
 
   /**
-   * A function to get the data from the server
+   * A function to get the data stream of all the assignments for the chosen subject
    * 
    */
     private fetchSubjectData(): void {
