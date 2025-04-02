@@ -18,14 +18,16 @@ id="selection-section">
 
     <ul>
         <li *ngFor="let subjectData of data.length > 0 ? data : []">
-            <figure>
-                <div>
-                    <img
-                    src="{{subjectData.assignmentmedia}}">
-                </div>
-            
-                <figcaption>{{subjectData.assignmentname}}</figcaption>
-            </figure>
+            <a href="{{subjectData.uni}}/{{subjectData.subject}}/{{subjectData.assignmentname}}">
+                <figure>
+                    <div>
+                        <img
+                        src="{{subjectData.assignmentmedia}}">
+                    </div>
+                
+                    <figcaption>{{subjectData.assignmentname}}</figcaption>
+                </figure>
+            </a>
         </li>
     </ul>
 

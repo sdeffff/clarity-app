@@ -5,6 +5,7 @@ import { SelectionPageComponent } from './pages/selection-page/selection-page.co
 
 import { SelectSubjectPageComponent } from './pages/select-subject-page/select-subject-page.component';
 import { SelectAssignmentComponent } from './pages/select-assignment/select-assignment.component';
+import { AssignmentPageComponent } from './pages/assignment-page/assignment-page.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent },
@@ -15,4 +16,6 @@ export const routes: Routes = [
     //Page to select the subject for the chosen data:
     { path: ":uni/:faculty/:year/:season/select-subject", component: SelectSubjectPageComponent },
     { path: ":uni/:faculty/:year/:season/select-assignment/:subject", component: SelectAssignmentComponent },
+    { path: ":uni/:subject/:assignment", component: AssignmentPageComponent },
+
 ];

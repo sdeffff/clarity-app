@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AfterViewInit } from '@angular/core';
 
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, Location } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -12,7 +12,6 @@ import { AppService } from '../../services/app-service.service';
 
 import { subjectDataModel } from '../../models/subject-data.model';
 import { numToStringMap } from '../../models/numToString.model';
-import { concatMap } from 'rxjs';
 
 //Popup window:
 import { SubjectPopupComponent } from '../../components/subject-popup/subject-popup.component';
@@ -34,11 +33,14 @@ export class SelectAssignmentComponent implements AfterViewInit {
     private service: AppService,
     private activeRouter: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private location: Location
   ) { };
 
   protected data: subjectDataModel[] = [];
   protected isEmpty: boolean = false;
+
+  protected urlData: string[] = [];
 
   protected isLoading: boolean = true;
 
@@ -53,7 +55,7 @@ export class SelectAssignmentComponent implements AfterViewInit {
       this.fetchSubjectData();
     } else {
       alert("Wrong URL!");
-      this.router.navigate(["/selection-page"]);
+      this.location.back();
     }
   }
 
@@ -105,16 +107,16 @@ export class SelectAssignmentComponent implements AfterViewInit {
    * @returns a boolean value that tells usif everything is okay with current url
    */
   private checkRoute(): boolean {
-    const urlData = this.getUrlData();
+    this.urlData = this.getUrlData();
     let isOkay = false;
 
     this.service.getUnisData().subscribe({
       next: (res) => {
         isOkay = res.some(el => 
-            el.uniname === urlData[0] && 
-            el.faculties.includes(urlData[1]) && 
-            el.years.map(year => numToStringMap.get(year)).includes(urlData[2]) && 
-            el.seasons.includes(urlData[3])
+            el.uniname === this.urlData[0] && 
+            el.faculties.includes(this.urlData[1]) && 
+            el.years.map(year => numToStringMap.get(year)).includes(this.urlData[2]) && 
+            el.seasons.includes(this.urlData[3])
         )
       },
 

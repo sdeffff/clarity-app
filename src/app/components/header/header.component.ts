@@ -6,7 +6,7 @@ import { NgIf } from '@angular/common';
 //Angular Material:
 import { MatInputModule } from '@angular/material/input';
 import { MatFormField } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NgIf, MatInputModule, MatFormField, MatButton, MatIconModule, FormsModule],
+  imports: [NgIf, MatInputModule, MatFormField, MatButton, MatButtonModule, MatIconModule, FormsModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
