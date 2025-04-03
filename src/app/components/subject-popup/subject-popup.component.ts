@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 import { Router } from '@angular/router';
 
@@ -9,9 +9,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+
 import { concatMap } from 'rxjs';
 
 import { AppService } from '../../services/app-service.service';
+import { ErrorComponent } from '../../pages/technical/error/error.component';
+import errorConfig from '../../pages/technical/configs/errorConfig.config';
 
 
 //For this component activated route is not working basically because for this component there are no 
@@ -19,7 +23,7 @@ import { AppService } from '../../services/app-service.service';
 @Component({
   selector: 'app-subject-popup',
   standalone: true,
-  imports: [FormsModule, MatButtonModule, MatInputModule, MatIconModule, NgIf],
+  imports: [FormsModule, MatButtonModule, MatInputModule, MatIconModule, NgIf, MatDialogModule],
   providers: [AppService],
   templateUrl: './subject-popup.component.html',
   styleUrl: './subject-popup.component.scss'
@@ -28,7 +32,10 @@ export class SubjectPopupComponent {
   constructor(
     private service: AppService,
     private router: Router,
+    private dialog: MatDialog,
   ) { };
+
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   protected assignmentMedia: File | null = null;
   protected assignmentName: string = "";
@@ -60,11 +67,6 @@ export class SubjectPopupComponent {
   */
   protected uploadAssignment(e: Event) {
     e.preventDefault();
-    
-    if(!this.assignmentMedia) {
-      alert("Please select an image to upload!");
-      return;
-    }
 
     this.handleLoader = true;
 
@@ -88,7 +90,14 @@ export class SubjectPopupComponent {
       },
 
       error: (err) => {
-        //show an error window that occured some problem with uploading assignment to database
+        this.dialog.open(ErrorComponent, errorConfig);
+
+        this.handleLoader = true;
+    
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+
         console.error(err);
       }
     })
@@ -105,5 +114,17 @@ export class SubjectPopupComponent {
       this.assignmentMedia = input.files[0];
       this.handleFileUpload = true;
     } else this.handleFileUpload = false;
+  }
+
+  protected handleFileDrop(event: DragEvent): void {
+    event.preventDefault();
+
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(event.dataTransfer?.files[0]!);
+
+    this.fileInput.nativeElement.files = dataTransfer.files;
+    this.assignmentMedia = this.fileInput.nativeElement.files[0];
+
+    this.handleFileUpload = true;
   }
 }
