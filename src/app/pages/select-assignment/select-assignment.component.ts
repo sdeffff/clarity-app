@@ -150,4 +150,11 @@ export class SelectAssignmentComponent implements AfterViewInit {
       height: "475px",
     });
   }
+
+  //Function to preload hovered components
+  protected preloadAssignmentPage(uniname: string, subject: string, assignmentname: string) {
+    import("../../pages/assignment-page/assignment-page.component").then(() => {
+      console.log("rendered!");
+    })
+  }
 }

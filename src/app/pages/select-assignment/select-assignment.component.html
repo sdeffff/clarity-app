@@ -3,7 +3,7 @@
 ></app-preloader>
 
 <section
-*ngIf="!isLoading && !isEmpty"
+*ngIf="!isLoading"
 id="selection-section">
     <article 
     *ngIf="isEmpty"
@@ -15,16 +15,18 @@ id="selection-section">
         >Add a material</button>
     </article>
 
-    <ul>
+    <ul *ngIf="!isEmpty">
         <li *ngFor="let subjectData of data.length > 0 ? data : []">
-            <a href="{{subjectData.uni}}/{{subjectData.subject}}/{{subjectData.assignmentname}}">
+            <a 
+            (mouseover)="preloadAssignmentPage(subjectData.uni, subjectData.subject, subjectData.assignment_name)"
+            href="{{subjectData.uni}}/{{subjectData.subject}}/{{subjectData.assignment_name}}">
                 <figure>
                     <div>
                         <img
-                        src="{{subjectData.assignmentmedia}}">
+                        src="{{subjectData.assignment_media}}">
                     </div>
                 
-                    <figcaption>{{subjectData.assignmentname}}</figcaption>
+                    <figcaption>{{subjectData.assignment_name}}</figcaption>
                 </figure>
             </a>
         </li>
