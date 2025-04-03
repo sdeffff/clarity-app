@@ -1,4 +1,4 @@
-<section>
+<section *ngIf="!isError">
     <main>
         <div
         #assignmentMedia
@@ -25,9 +25,11 @@
                     <div>
                         <p>Download Assignment</p>
 
-                        <img src="../../../assets/icons/download-icon.png" alt="">
-
-                        <p>{{fileSize}}</p>
+                        <span>
+                            <p>{{fileSize}}</p>
+                        
+                            <img src="../../../assets/icons/download-icon.png" alt="">
+                        </span>
                     </div>
                 </a>
             </div>

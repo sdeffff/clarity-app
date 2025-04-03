@@ -12,7 +12,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import dialogConfig from '../../models/dialogConfig.config';
+import errorConfig from '../technical/configs/errorConfig.config';
 
 import { AppService } from '../../services/app-service.service';
 
@@ -66,7 +66,7 @@ export class SelectSubjectPageComponent implements AfterViewInit {
         this.isLoading = false;
         this.isError = true;
 
-        this.dialog.open(ErrorComponent, dialogConfig);
+        this.dialog.open(ErrorComponent, errorConfig);
         this.dialog.afterAllClosed.subscribe(() => this.router.navigate([`/selection-page`]));
       }
     })

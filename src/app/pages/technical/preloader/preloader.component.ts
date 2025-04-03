@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 @Component({
   selector: 'app-preloader',
   template: `
-    <section [class.fade-out]="isVisible">
+    <section>
       <div class="loader-wrapper">
         <div>
           <div class="loader"></div>
@@ -15,5 +15,4 @@ import { Component, Input } from '@angular/core';
   styleUrl: './preloader.component.scss'
 })
 export class PreloaderComponent {
-  @Input() isVisible: boolean = false;
 }
