@@ -1,7 +1,7 @@
 export interface subjectDataModel {
     uni: string,
     subject: string,
-    assignmentname: string,
-    assignmentmedia: string,
+    assignment_name: string,
+    assignment_media: string,
     author: string,
 }

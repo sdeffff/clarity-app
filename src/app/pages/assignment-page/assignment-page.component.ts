@@ -13,8 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ErrorComponent } from '../technical/error/error.component';
 
 import { AppService } from '../../services/app-service.service';
-
-import { assignmentModel } from '../../models/assignment-data.model';
+import { subjectDataModel } from '../../models/subject-data.model';
 
 @Component({
   selector: 'app-assignment-page',
@@ -33,11 +32,13 @@ export class AssignmentPageComponent {
     private dialog: MatDialog,
   ) { };
 
-  protected data: assignmentModel[] = [];
-  protected urlData: {uni: string, subject: string, assignmentname: string} = {
+  protected data: subjectDataModel[] = [];
+  protected urlData: subjectDataModel = {
     uni: "",
     subject: "",
-    assignmentname: "",
+    assignment_name: "",
+    assignment_media: "",
+    author: "",
   };
 
   protected isError: boolean = true;
@@ -53,7 +54,7 @@ export class AssignmentPageComponent {
 
     const waitForData = () => {
       const dataInterval = setInterval(() => {
-        if(this.urlData.assignmentname = '') {
+        if(this.urlData.assignment_name = '') {
           waitForData();
         } else clearInterval(dataInterval);
 
@@ -70,7 +71,7 @@ export class AssignmentPageComponent {
 
           this.data = res;
 
-          this.getImageSize(res[0].assignmentmedia);
+          this.getImageSize(res[0].assignment_media);
         }
       },
 
@@ -93,8 +94,8 @@ export class AssignmentPageComponent {
     this.acitveRouter.paramMap.subscribe(params => {
       this.urlData.uni = params.get("uni")!;
       this.urlData.subject = params.get("subject")!;
-      this.urlData.assignmentname = params.get("assignment")!;
-    })
+      this.urlData.assignment_name = params.get("assignment")!;
+    });
   }
 
   //Function to check that everything is okay, and client didn't wrote some random stuff in url
@@ -114,13 +115,22 @@ export class AssignmentPageComponent {
 
   //Call this function from service!
   protected getImageSize(imgUrl: string) {
-    this.http.head(imgUrl, { 
-      observe: 'response',
-      transferCache: { includeHeaders: ['content-length'] }
-    }).subscribe(response => {
-      const size = response.headers.get('content-length');
-      this.fileSize = size ? (parseInt(size) / 1024).toFixed(2) + 'KB' : '';
-    });
+    this.service.getImageSize(imgUrl).subscribe({
+      next: (res) => {
+        const size = res.headers.get('content-length');
+
+        const mb_size: number = (parseInt(size!) / 1_048_576)
+        const kb_size: number = (parseInt(size!) / 1024)
+
+        if(mb_size > 1) this.fileSize = mb_size.toFixed(2) + "Mb";
+        else this.fileSize = kb_size.toFixed(2) + "Kb";
+      },
+
+      error: (err) => {
+        this.fileSize = "";
+        console.error(err);
+      }
+    })
   }
 
   protected handleMouseEnter(event: MouseEvent) {

@@ -25,8 +25,11 @@
         <label 
         for="input-file" 
         id="drop-area"
+        (dragover)="$event.preventDefault()"
+        (drop)="handleFileDrop($event)"
         >
             <input 
+            #fileInput
             id="input-file"
             name="file"
             (change)="onFileSelected($event)"   
@@ -54,6 +57,6 @@
         <button 
         mat-flat-button 
         (click)="uploadAssignment($event)"
-        [disabled]="assignmentName == '' || assignmentMedia == null">Upload</button>
+        [disabled]="assignmentName == '' || assignmentMedia == null || !handleFileUpload">Upload</button>
     </form>
 </section>

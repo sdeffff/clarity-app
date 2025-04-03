@@ -10,7 +10,6 @@ import { HttpHeaderBuilderService } from './http-header-builder.service';
 import { universityModel } from '../models/university.model';
 import { facultySubjects } from '../models/faculty-subjects.model';
 import { subjectDataModel } from '../models/subject-data.model';
-import { assignmentModel } from '../models/assignment-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -82,8 +81,8 @@ export class AppService {
    * able to get the remaining data from database
    * @returns an observalbe with array where our assignment data will be stored
    */
-  getAssignmentDataFromDB(assignmentData: {uni: string, subject: string, assignmentname: string}): Observable<assignmentModel[]> {
-    return this.http.get<assignmentModel[]>(`${environment.apiUrl}/${assignmentData.uni}/${assignmentData.subject}/${assignmentData.assignmentname}`);
+  getAssignmentDataFromDB(assignmentData: subjectDataModel): Observable<subjectDataModel[]> {
+    return this.http.get<subjectDataModel[]>(`${environment.apiUrl}/${assignmentData.uni}/${assignmentData.subject}/${assignmentData.assignment_name}`);
   }
 
   /**
