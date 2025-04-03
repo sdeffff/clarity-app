@@ -8,7 +8,7 @@ import { NgFor, NgIf, Location } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import dialogConfig from '../../models/dialogConfig.config';
+import errorConfig from '../technical/configs/errorConfig.config';
 
 import { AppService } from '../../services/app-service.service';
 
@@ -20,6 +20,7 @@ import { SubjectPopupComponent } from '../../components/subject-popup/subject-po
 
 import { PreloaderComponent } from '../technical/preloader/preloader.component';
 import { ErrorComponent } from '../technical/error/error.component';
+
 
 @Component({
   selector: 'app-select-assignment',
@@ -58,12 +59,7 @@ export class SelectAssignmentComponent implements AfterViewInit {
     if(this.checkRoute()) {
       this.isError = false;
 
-      try {
-        this.fetchSubjectData();
-      } catch (err) {
-        this.dialog.open(ErrorComponent, dialogConfig);
-        this.dialog.afterAllClosed.subscribe(() => this.location.back());
-      }
+      this.fetchSubjectData();
     } else {
       this.isError = true;
     }
@@ -75,8 +71,6 @@ export class SelectAssignmentComponent implements AfterViewInit {
    */
     private fetchSubjectData(): void {
       let subjectName = this.getUrlData()[4];
-      
-      throw new Error("asd");
 
       this.service.getSubjectData(subjectName).subscribe({
         next: (res) => {
@@ -86,7 +80,11 @@ export class SelectAssignmentComponent implements AfterViewInit {
   
         error: (err) => {
           this.isError = true;
-          console.log(err);
+        
+          this.dialog.open(ErrorComponent, errorConfig);
+          this.dialog.afterAllClosed.subscribe(() => this.location.back());
+
+          console.error(err);
         }
       })
     }
@@ -133,10 +131,11 @@ export class SelectAssignmentComponent implements AfterViewInit {
       },
 
       error: (err) => {
-        this.dialog.open(ErrorComponent, dialogConfig);
+        console.error(err);
+
+        this.dialog.open(ErrorComponent, errorConfig);
         this.dialog.afterAllClosed.subscribe(() => this.location.back());
 
-        console.error(err);
         isOkay = false;
       }
     });

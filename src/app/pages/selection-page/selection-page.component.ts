@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 
 //Config for Dialog window:
-import dialogConfig from '../../models/dialogConfig.config';
+import errorConfig from '../technical/configs/errorConfig.config';
 
 import { AppService } from '../../services/app-service.service';
 
@@ -69,7 +69,7 @@ export class SelectionPageComponent {
       error: (err) => {
         console.error(err);
 
-        alert("asd");
+        this.dialog.open(ErrorComponent, errorConfig);
       }
     });
   };

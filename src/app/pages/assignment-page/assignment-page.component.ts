@@ -1,12 +1,16 @@
 import { Component, AfterViewInit, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Location } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
 
 import { HttpClient } from '@angular/common/http';
 
-import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import errorConfig from '../technical/configs/errorConfig.config';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
+import { ErrorComponent } from '../technical/error/error.component';
 
 import { AppService } from '../../services/app-service.service';
 
@@ -15,7 +19,7 @@ import { assignmentModel } from '../../models/assignment-data.model';
 @Component({
   selector: 'app-assignment-page',
   standalone: true,
-  imports: [MatButtonModule, FormsModule],
+  imports: [MatButtonModule, FormsModule, MatDialogModule, NgIf],
   providers: [AppService],
   templateUrl: './assignment-page.component.html',
   styleUrl: './assignment-page.component.scss'
@@ -24,9 +28,9 @@ export class AssignmentPageComponent {
   constructor(
     private service: AppService,
     private acitveRouter: ActivatedRoute,
-    private router: Router,
     private location: Location,
     private http: HttpClient,
+    private dialog: MatDialog,
   ) { };
 
   protected data: assignmentModel[] = [];
@@ -35,6 +39,8 @@ export class AssignmentPageComponent {
     subject: "",
     assignmentname: "",
   };
+
+  protected isError: boolean = true;
 
   /**
    * When the component mounts we getting the data from url string this component based on
@@ -60,6 +66,8 @@ export class AssignmentPageComponent {
         if(res.length === 0) {
           this.location.back();
         } else {
+          this.isError = false;
+
           this.data = res;
 
           this.getImageSize(res[0].assignmentmedia);
@@ -67,8 +75,15 @@ export class AssignmentPageComponent {
       },
 
       error: (err) => {
-        console.log(err);
-        this.location.back();
+        console.error(err);
+
+        this.isError = true;
+
+        this.dialog.open(ErrorComponent, errorConfig);
+
+        this.dialog.afterAllClosed.subscribe(() => {
+          this.location.back();
+        })
       }
     });
   }

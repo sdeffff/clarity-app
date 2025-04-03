@@ -85,15 +85,25 @@ section {
                             display: flex !important;
                             align-items: center !important;
                             flex-direction: row !important;
-                            gap: .5rem;
+                            gap: .75rem;
 
                             p {
-                                font-size: 1.1rem;
+                                font-size: 1.25rem;
                             }
-                        
+
+                            span {
+                                display: flex;
+                                align-items: center;
+                                gap: .25rem;
+                             
+                                p {
+                                    font-size: 1.1rem;
+                                }
                             
-                            img {
-                                max-width: 1rem;
+                                
+                                img {
+                                    max-width: 1rem;
+                                }
                             }
                         }
                     }
