@@ -75,8 +75,8 @@ export class SubjectPopupComponent {
         const passingData = {
           uni: this.urlData[0],
           subject: subjectName,
-          assignmentname: this.assignmentName,
-          assignmentmedia: res.fileUrl,
+          assignment_name: this.assignmentName,
+          assignment_media: res.fileUrl,
           author: "anonymous",
         };
 
