@@ -153,8 +153,6 @@ export class SelectAssignmentComponent implements AfterViewInit {
 
   //Function to preload hovered components
   protected preloadAssignmentPage(uniname: string, subject: string, assignmentname: string) {
-    import("../../pages/assignment-page/assignment-page.component").then(() => {
-      console.log("rendered!");
-    })
+    import("../../pages/assignment-page/assignment-page.component").then(() => {});
   }
 }

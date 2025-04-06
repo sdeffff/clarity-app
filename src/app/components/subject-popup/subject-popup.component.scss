@@ -71,7 +71,7 @@ section {
         #drop-area {
             width: 400px;
             height: 200px;
-            background-color: #4e6af021;
+            // background-color: #4e6af021;
 
             padding: 20px;
 
@@ -79,6 +79,8 @@ section {
 
             border-radius: .375rem;
             border: 2px dashed #000;
+
+            transition: .25s ease;
 
             #drop-info,
             #success-drop {

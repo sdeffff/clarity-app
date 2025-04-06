@@ -23,9 +23,11 @@
         </mat-form-field>
     
         <label 
+        [style]="dropAreaStyles"
         for="input-file" 
         id="drop-area"
-        (dragover)="$event.preventDefault()"
+        (dragover)="handleDragOver($event)"
+        (dragend)="dropAreaStyles='background-color: #4e6af021;'"
         (drop)="handleFileDrop($event)"
         >
             <input 

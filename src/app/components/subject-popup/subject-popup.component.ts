@@ -35,16 +35,23 @@ export class SubjectPopupComponent {
     private dialog: MatDialog,
   ) { };
 
+  //Varialbe to get the instance of our input
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
+  //Variables to store information about assignment that user wants to add
   protected assignmentMedia: File | null = null;
   protected assignmentName: string = "";
 
+  //Varialbes to store information about url params like uni, subject and assignment name
   private urlData: string[] = [];
-  protected currentSubject: string | null = null;
+  protected currentSubject: string = "";
 
+  //Varialbe to handle file uploadings
   protected handleFileUpload: boolean = false;
   protected handleLoader: boolean = false;
+  
+  //Styles that are applying to the area when user drags over it
+  protected dropAreaStyles: string = "background-color: #4e6af021;";
 
   ngOnInit() {
     this.urlData = this.router.url.split("/")
@@ -69,14 +76,12 @@ export class SubjectPopupComponent {
     e.preventDefault();
 
     this.handleLoader = true;
-
-    const subjectName = this.urlData[this.urlData.length - 1];
     
-    this.service.addSubjectMaterialToStorage(this.assignmentMedia!, subjectName).pipe(
+    this.service.addSubjectMaterialToStorage(this.assignmentMedia!, this.currentSubject).pipe(
       concatMap((res) => {
         const passingData = {
           uni: this.urlData[0],
-          subject: subjectName,
+          subject: this.currentSubject,
           assignment_name: this.assignmentName,
           assignment_media: res.fileUrl,
           author: "anonymous",
@@ -105,7 +110,7 @@ export class SubjectPopupComponent {
 
   /**
    * 
-   * Function to get the chosen image as file and save it in variable
+   * Function to get the image file when user clicks on the area
    * @param event - to get the file from input type='file';
   */
   protected onFileSelected(event: Event): void {
@@ -116,8 +121,27 @@ export class SubjectPopupComponent {
     } else this.handleFileUpload = false;
   }
 
+  /**
+   * Basically this function is to prevent image file openin gin the new tab
+   * and apply styles to the label area
+   * 
+   * @event - event when we dragging over our file
+   */
+  protected handleDragOver(event: DragEvent): void {
+    event.preventDefault();
+
+    this.dropAreaStyles = "background-color: #9cabf0;";
+  }
+
+  /**
+   * Function to get the image file when user drag & drops image file over the area
+   * 
+   * @param event - event when user drags the file over the area
+   */
   protected handleFileDrop(event: DragEvent): void {
     event.preventDefault();
+
+    this.dropAreaStyles = "background-color: #4e6af021;";
 
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(event.dataTransfer?.files[0]!);
