@@ -83,7 +83,7 @@ export class SubjectPopupComponent {
           uni: this.urlData[0],
           subject: this.currentSubject,
           assignment_name: this.assignmentName,
-          assignment_media: res.fileUrl,
+          assignment_media: res.fileUrl, //getting fileUrl when uploading our file to cloudstorage
           author: "anonymous",
         };
 
@@ -95,6 +95,23 @@ export class SubjectPopupComponent {
       },
 
       error: (err) => {
+        //And calling method to delete asset from cloud storage
+        this.service.removeSubjectMaterialFromStorage(this.assignmentMedia!, this.currentSubject)
+          .subscribe({
+            next: () => {
+              //Clearing variables and file in input in case of error:
+              this.assignmentMedia = null;
+              this.fileInput.nativeElement.files = null;
+            },
+
+            error: (err) => {
+              console.log("Happened some error with deleting file from the storage");
+              console.error(err);
+            }
+          })
+
+
+
         this.dialog.open(ErrorComponent, errorConfig);
 
         this.handleLoader = true;
