@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import { concatMap } from 'rxjs';
+import { catchError, concatMap } from 'rxjs';
 
 import { AppService } from '../../services/app-service.service';
 import { ErrorComponent } from '../../pages/technical/error/error.component';
@@ -45,6 +45,7 @@ export class SubjectPopupComponent {
   //Varialbes to store information about url params like uni, subject and assignment name
   private urlData: string[] = [];
   protected currentSubject: string = "";
+  protected fileUrl: string = "";
 
   //Varialbe to handle file uploadings
   protected handleFileUpload: boolean = false;
@@ -79,6 +80,8 @@ export class SubjectPopupComponent {
     
     this.service.addSubjectMaterialToStorage(this.assignmentMedia!, this.currentSubject).pipe(
       concatMap((res) => {
+        this.fileUrl = res.fileUrl;
+
         const passingData = {
           uni: this.urlData[0],
           subject: this.currentSubject,
@@ -86,7 +89,7 @@ export class SubjectPopupComponent {
           assignment_media: res.fileUrl, //getting fileUrl when uploading our file to cloudstorage
           author: "anonymous",
         };
-
+        
         return this.service.addAssignmentDataToDB(passingData);
       })
     ).subscribe({
@@ -95,12 +98,27 @@ export class SubjectPopupComponent {
       },
 
       error: (err) => {
+        //In case of error from API delete the file form the cloud storage and clear variables
+
+        //Changing full url to the public ID, so cloudinary will be able to delete it
+        const id = this.fileUrl.split("/")[this.fileUrl.split("/").length - 1].split(".")[0];
+        const folder = this.fileUrl.split("/")[this.fileUrl.split("/").length - 2];
+        
+        const filePublicLink = `${folder}/${id}`;
+
         //And calling method to delete asset from cloud storage
-        this.service.removeSubjectMaterialFromStorage(this.assignmentMedia!, this.currentSubject)
+        this.service.removeSubjectMaterialFromStorage(filePublicLink, this.currentSubject)
           .subscribe({
             next: () => {
+              console.log("file deleted from the storage: ", filePublicLink);
+
+              setTimeout(() => {
+                window.location.reload();
+              }, 800);
+
               //Clearing variables and file in input in case of error:
               this.assignmentMedia = null;
+              this.fileUrl = "";
               this.fileInput.nativeElement.files = null;
             },
 
@@ -110,12 +128,10 @@ export class SubjectPopupComponent {
             }
           })
 
-
-
         this.dialog.open(ErrorComponent, errorConfig);
 
         this.handleLoader = true;
-    
+  
         setTimeout(() => {
           window.location.reload();
         }, 1000);

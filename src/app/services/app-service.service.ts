@@ -59,13 +59,12 @@ export class AppService {
     )
   }
 
-  removeSubjectMaterialFromStorage(subjectFile: File, subjectName: string): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', subjectFile);
-    formData.append('subject', subjectName);
-
+  removeSubjectMaterialFromStorage(fileUrl: string, subjectName: string): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/subject-data/${subjectName}/remove-material`, 
-      formData
+      {
+        fileUrl: fileUrl,
+        subject: subjectName
+      }
     )
   }
   
