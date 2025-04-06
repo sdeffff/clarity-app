@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
-import { PreloaderComponent } from '../technical/preloader/preloader.component';
-
 import { AfterViewInit } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,7 +20,7 @@ import { ErrorComponent } from '../technical/error/error.component';
 @Component({
   selector: 'app-select-subject-page',
   standalone: true,
-  imports: [HttpClientModule, NgFor, NgIf, MatButtonModule, PreloaderComponent, MatDialogModule],
+  imports: [HttpClientModule, NgFor, NgIf, MatButtonModule, MatDialogModule],
   providers: [AppService],
   templateUrl: './select-subject-page.component.html',
   styleUrl: './select-subject-page.component.scss'
