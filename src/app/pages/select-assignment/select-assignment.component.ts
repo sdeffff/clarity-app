@@ -109,6 +109,7 @@ export class SelectAssignmentComponent {
    */
   private checkRoute(): boolean {
     this.urlData = this.getUrlData();
+
     let isOkay = false;
 
     this.service.getUnisData().subscribe({
@@ -116,7 +117,7 @@ export class SelectAssignmentComponent {
         isOkay = res.some(el => 
             el.uniname === this.urlData[0] && 
             el.faculties.includes(this.urlData[1]) && 
-            el.years.map(year => numToStringMap.get(year)).includes(this.urlData[2]) && 
+            el.years.includes(this.urlData[2]) && 
             el.seasons.includes(this.urlData[3])
         )
       },

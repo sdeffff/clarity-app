@@ -1,6 +1,6 @@
 export interface universityModel {
     uniname: string,
     faculties: string[],
-    years: number[],
+    years: string[],
     seasons: string[],
 }
