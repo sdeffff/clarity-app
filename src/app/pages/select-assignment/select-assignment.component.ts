@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AfterViewInit } from '@angular/core';
-
 import { NgFor, NgIf, Location } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -32,7 +30,7 @@ import { ErrorComponent } from '../technical/error/error.component';
 })
 
 //Page where user selects Assignments and other stuff for already selected subject
-export class SelectAssignmentComponent implements AfterViewInit {
+export class SelectAssignmentComponent {
   constructor(
     private service: AppService,
     private activeRouter: ActivatedRoute,
@@ -47,13 +45,6 @@ export class SelectAssignmentComponent implements AfterViewInit {
   protected urlData: string[] = [];
 
   protected isError: boolean = true;
-  protected isLoading: boolean = true;
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
-  }
 
   private ngOnInit(): void {
     if(this.checkRoute()) {
@@ -153,8 +144,6 @@ export class SelectAssignmentComponent implements AfterViewInit {
 
   //Function to preload hovered components
   protected preloadAssignmentPage(uniname: string, subject: string, assignmentname: string) {
-    import("../../pages/assignment-page/assignment-page.component").then(() => {
-      console.log("rendered!");
-    })
+    import("../../pages/assignment-page/assignment-page.component").then(() => {});
   }
 }

@@ -25,12 +25,14 @@ section {
                 border-radius: .75rem;
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
+                object-fit: contain;
 
                 transform: scale(var(--zoom, 1));
                 transform-origin: var(--x) var(--y);
 
                 transition: transform .2s ease;
+
+                cursor: zoom-in;
     
                 &:hover {
                     --zoom: 1.75;

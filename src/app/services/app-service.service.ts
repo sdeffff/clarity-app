@@ -49,13 +49,22 @@ export class AppService {
    * @param subject - subject name to post to the url
    * @returns an observable with object where link to media is located
    */
-  addSubjectMaterialToStorage(subjectFile: File, subject: string): Observable<{fileUrl: string}> {
+  addSubjectMaterialToStorage(subjectFile: File, subjectName: string): Observable<{fileUrl: string}> {
     const formData = new FormData();
     formData.append('file', subjectFile);
-    formData.append('subject', subject);
+    formData.append('subject', subjectName);
 
-    return this.http.post<any>(`${environment.apiUrl}/subject-data/${subject}/add-material`, 
+    return this.http.post<any>(`${environment.apiUrl}/subject-data/${subjectName}/add-material`, 
       formData
+    )
+  }
+
+  removeSubjectMaterialFromStorage(fileUrl: string, subjectName: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/subject-data/${subjectName}/remove-material`, 
+      {
+        fileUrl: fileUrl,
+        subject: subjectName
+      }
     )
   }
   

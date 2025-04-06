@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import { concatMap } from 'rxjs';
+import { catchError, concatMap } from 'rxjs';
 
 import { AppService } from '../../services/app-service.service';
 import { ErrorComponent } from '../../pages/technical/error/error.component';
@@ -35,16 +35,24 @@ export class SubjectPopupComponent {
     private dialog: MatDialog,
   ) { };
 
+  //Varialbe to get the instance of our input
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
+  //Variables to store information about assignment that user wants to add
   protected assignmentMedia: File | null = null;
   protected assignmentName: string = "";
 
+  //Varialbes to store information about url params like uni, subject and assignment name
   private urlData: string[] = [];
-  protected currentSubject: string | null = null;
+  protected currentSubject: string = "";
+  protected fileUrl: string = "";
 
+  //Varialbe to handle file uploadings
   protected handleFileUpload: boolean = false;
   protected handleLoader: boolean = false;
+  
+  //Styles that are applying to the area when user drags over it
+  protected dropAreaStyles: string = "background-color: #4e6af021;";
 
   ngOnInit() {
     this.urlData = this.router.url.split("/")
@@ -69,19 +77,19 @@ export class SubjectPopupComponent {
     e.preventDefault();
 
     this.handleLoader = true;
-
-    const subjectName = this.urlData[this.urlData.length - 1];
     
-    this.service.addSubjectMaterialToStorage(this.assignmentMedia!, subjectName).pipe(
+    this.service.addSubjectMaterialToStorage(this.assignmentMedia!, this.currentSubject).pipe(
       concatMap((res) => {
+        this.fileUrl = res.fileUrl;
+
         const passingData = {
           uni: this.urlData[0],
-          subject: subjectName,
+          subject: this.currentSubject,
           assignment_name: this.assignmentName,
-          assignment_media: res.fileUrl,
+          assignment_media: res.fileUrl, //getting fileUrl when uploading our file to cloudstorage
           author: "anonymous",
         };
-
+        
         return this.service.addAssignmentDataToDB(passingData);
       })
     ).subscribe({
@@ -90,10 +98,40 @@ export class SubjectPopupComponent {
       },
 
       error: (err) => {
+        //In case of error from API delete the file form the cloud storage and clear variables
+
+        //Changing full url to the public ID, so cloudinary will be able to delete it
+        const id = this.fileUrl.split("/")[this.fileUrl.split("/").length - 1].split(".")[0];
+        const folder = this.fileUrl.split("/")[this.fileUrl.split("/").length - 2];
+        
+        const filePublicLink = `${folder}/${id}`;
+
+        //And calling method to delete asset from cloud storage
+        this.service.removeSubjectMaterialFromStorage(filePublicLink, this.currentSubject)
+          .subscribe({
+            next: () => {
+              console.log("file deleted from the storage: ", filePublicLink);
+
+              setTimeout(() => {
+                window.location.reload();
+              }, 800);
+
+              //Clearing variables and file in input in case of error:
+              this.assignmentMedia = null;
+              this.fileUrl = "";
+              this.fileInput.nativeElement.files = null;
+            },
+
+            error: (err) => {
+              console.log("Happened some error with deleting file from the storage");
+              console.error(err);
+            }
+          })
+
         this.dialog.open(ErrorComponent, errorConfig);
 
         this.handleLoader = true;
-    
+  
         setTimeout(() => {
           window.location.reload();
         }, 1000);
@@ -105,7 +143,7 @@ export class SubjectPopupComponent {
 
   /**
    * 
-   * Function to get the chosen image as file and save it in variable
+   * Function to get the image file when user clicks on the area
    * @param event - to get the file from input type='file';
   */
   protected onFileSelected(event: Event): void {
@@ -116,8 +154,27 @@ export class SubjectPopupComponent {
     } else this.handleFileUpload = false;
   }
 
+  /**
+   * Basically this function is to prevent image file openin gin the new tab
+   * and apply styles to the label area
+   * 
+   * @event - event when we dragging over our file
+   */
+  protected handleDragOver(event: DragEvent): void {
+    event.preventDefault();
+
+    this.dropAreaStyles = "background-color: #9cabf0;";
+  }
+
+  /**
+   * Function to get the image file when user drag & drops image file over the area
+   * 
+   * @param event - event when user drags the file over the area
+   */
   protected handleFileDrop(event: DragEvent): void {
     event.preventDefault();
+
+    this.dropAreaStyles = "background-color: #4e6af021;";
 
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(event.dataTransfer?.files[0]!);

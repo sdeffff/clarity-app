@@ -69,6 +69,12 @@ section {
                 img {
                     max-width: 19rem;
                     width: 100%;
+
+                    transition: scale .2s ease;
+
+                    &:hover {
+                        scale: 1.15;
+                    }
                 }
 
                 figcaption {
