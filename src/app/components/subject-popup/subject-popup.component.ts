@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import { catchError, concatMap } from 'rxjs';
+import { catchError, concatMap, filter } from 'rxjs';
 
 import { AppService } from '../../services/app-service.service';
 import { ErrorComponent } from '../../pages/technical/error/error.component';
@@ -77,7 +77,7 @@ export class SubjectPopupComponent {
     e.preventDefault();
 
     this.handleLoader = true;
-    
+
     this.service.addSubjectMaterialToStorage(this.assignmentMedia!, this.currentSubject).pipe(
       concatMap((res) => {
         this.fileUrl = res.fileUrl;
@@ -85,7 +85,7 @@ export class SubjectPopupComponent {
         const passingData = {
           uni: this.urlData[0],
           subject: this.currentSubject,
-          assignment_name: this.assignmentName,
+          assignment_name: this.filterAssignmentName(this.assignmentName),
           assignment_media: res.fileUrl, //getting fileUrl when uploading our file to cloudstorage
           author: "anonymous",
         };
@@ -152,6 +152,21 @@ export class SubjectPopupComponent {
       this.assignmentMedia = input.files[0];
       this.handleFileUpload = true;
     } else this.handleFileUpload = false;
+  }
+
+
+  private filterAssignmentName(inputString: string): string {
+    let filteredString: string[] = inputString.split("");
+
+    const notAllowed: string[] = ["_", ")", "!", "%", "$", "(", "/", "?", "=", ">", "<"];
+
+    for(let el of filteredString) {
+      if(notAllowed.includes(el)) {
+        filteredString[filteredString.indexOf(el)] = "";
+      }
+    }
+
+    return filteredString.join("");
   }
 
   /**
