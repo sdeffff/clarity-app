@@ -22,7 +22,7 @@ import { PreloaderComponent } from '../technical/preloader/preloader.component';
 @Component({
   selector: 'app-select-assignment',
   standalone: true,
-  imports: [NgFor, NgIf, MatButtonModule, MatDialogModule],
+  imports: [NgFor, NgIf, MatButtonModule, MatDialogModule, PreloaderComponent],
   providers: [AppService],
   templateUrl: './select-assignment.component.html',
   styleUrl: './select-assignment.component.scss'
