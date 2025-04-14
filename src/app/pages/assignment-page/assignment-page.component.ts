@@ -89,6 +89,16 @@ export class AssignmentPageComponent {
     });
   }
 
+  protected isPdf(url: string): boolean {
+    if(!url) return false;
+
+    if (url.toLowerCase().endsWith('.pdf')) return true;
+
+    if (url.includes('/raw/upload/') || url.includes('resource_type=raw')) return true;
+    
+    return false;
+  }
+
   //Helper function to get the values of the url value and then use them
   private getUrlData() {
     this.acitveRouter.paramMap.subscribe(params => {

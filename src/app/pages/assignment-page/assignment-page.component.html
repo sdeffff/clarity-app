@@ -4,10 +4,21 @@
         #assignmentMedia
         class="image-container">
             <img
+            *ngIf="!isPdf(data[0].assignment_media)"
             (mouseenter)="handleMouseEnter($event)"
             (mousemove)="handleMouseMove($event)"
             class="assignment-preview"
             src="{{data[0].assignment_media}}">
+
+            <object 
+            *ngIf="isPdf(data[0].assignment_media)" 
+            class="pdf-preview"
+            [data]="data[0].assignment_media"
+            type="application/pdf"
+            width="100%"
+            height="600px">
+            <p>Unable to display PDF. <a href="{{data[0].assignment_media}}" target="_blank">Download PDF</a> instead.</p>
+        </object>
         </div>
 
         <article>

@@ -11,19 +11,17 @@ import errorConfig from '../technical/configs/errorConfig.config';
 import { AppService } from '../../services/app-service.service';
 
 import { subjectDataModel } from '../../models/subject-data.model';
-import { numToStringMap } from '../../models/numToString.model';
 
 //Popup window:
 import { SubjectPopupComponent } from '../../components/subject-popup/subject-popup.component';
 
-import { PreloaderComponent } from '../technical/preloader/preloader.component';
 import { ErrorComponent } from '../technical/error/error.component';
 
 
 @Component({
   selector: 'app-select-assignment',
   standalone: true,
-  imports: [NgFor, NgIf, MatButtonModule, MatDialogModule, PreloaderComponent],
+  imports: [NgFor, NgIf, MatButtonModule, MatDialogModule],
   providers: [AppService],
   templateUrl: './select-assignment.component.html',
   styleUrl: './select-assignment.component.scss'
