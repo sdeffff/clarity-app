@@ -17,7 +17,9 @@
             placeholder="F.e. first homework Algebra(1) 2014"
             name="assignmentName" 
             type="text" 
-            [(ngModel)]="assignmentName" 
+            [(ngModel)]="assignmentName"
+            maxlength="32"
+            max="32"
             required=""
             >
         </mat-form-field>
@@ -59,6 +61,6 @@
         <button 
         mat-flat-button 
         (click)="uploadAssignment($event)"
-        [disabled]="assignmentName == '' || assignmentMedia == null || !handleFileUpload">Upload</button>
+        [disabled]="assignmentName == '' || assignmentMedia == null || !handleFileUpload || assignmentName.length > 32 || assignmentName.length < 8">Upload</button>
     </form>
 </section>
