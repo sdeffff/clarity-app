@@ -70,7 +70,7 @@ export class SelectSubjectPageComponent implements AfterViewInit {
     })
   }
 
-  private ngOnInit(): void {
+  ngOnInit(): void {
     this.activeRoute.paramMap.subscribe(params => {
       this.urlData = [
         params.get("uni")!,

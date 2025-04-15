@@ -52,7 +52,7 @@ export class SelectAssignmentComponent implements AfterViewInit {
       }, 1000);
   }
 
-  private ngOnInit(): void {
+  ngOnInit(): void {
     if(this.checkRoute()) {
       this.isError = false;
 
@@ -71,8 +71,10 @@ export class SelectAssignmentComponent implements AfterViewInit {
 
       this.service.getSubjectData(subjectName).subscribe({
         next: (res) => {
-          if(res.length > 0) this.data = res;
-          else this.isEmpty = true;
+          console.log(res);
+
+          this.data = res;
+          this.isEmpty = (res.length === 0);
         },
   
         error: (err) => {
