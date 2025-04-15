@@ -53,13 +53,13 @@ export class SelectAssignmentComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    if(this.checkRoute()) {
-      this.isError = false;
+    this.checkRoute().then((isValid) => {
+      if(isValid) {
+        this.isError = false;
 
-      this.fetchSubjectData();
-    } else {
-      this.isError = true;
-    }
+        this.fetchSubjectData();
+      } else this.isError = true;
+    })
   }
 
   /**
@@ -67,7 +67,7 @@ export class SelectAssignmentComponent implements AfterViewInit {
    * 
    */
     private fetchSubjectData(): void {
-      let subjectName = this.getUrlData()[4];
+      let subjectName = encodeURIComponent(this.getUrlData()[4]);
 
       this.service.getSubjectData(subjectName).subscribe({
         next: (res) => {
@@ -115,32 +115,30 @@ export class SelectAssignmentComponent implements AfterViewInit {
    * 
    * @returns a boolean value that tells usif everything is okay with current url
    */
-  private checkRoute(): boolean {
+  private checkRoute(): Promise<boolean> {
     this.urlData = this.getUrlData();
-
-    let isOkay = false;
-
-    this.service.getUnisData().subscribe({
-      next: (res) => {
-        isOkay = res.some(el => 
+    
+    return new Promise((resolve) => {
+      this.service.getUnisData().subscribe({
+        next: (res) => {
+          const isOkay = res.some(el => 
             el.uniname === this.urlData[0] && 
             el.faculties.includes(this.urlData[1]) && 
             el.years.includes(this.urlData[2]) && 
             el.seasons.includes(this.urlData[3])
-        )
-      },
+          );
+          resolve(isOkay);
+        },
+        error: (err) => {
+          console.error(err);
+          
+          this.dialog.open(ErrorComponent, errorConfig);
+          this.dialog.afterAllClosed.subscribe(() => this.location.back());
 
-      error: (err) => {
-        console.error(err);
-
-        this.dialog.open(ErrorComponent, errorConfig);
-        this.dialog.afterAllClosed.subscribe(() => this.location.back());
-
-        isOkay = false;
-      }
+          resolve(false);
+        }
+      });
     });
-
-    return isOkay;
   }
 
   //Functions for angular material popup:
