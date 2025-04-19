@@ -124,7 +124,32 @@ body .mat-mdc-fab-extended.mat-accent {
   padding: 0 !important;
 }
 
+.mat-mdc-select-trigger .mat-mdc-select-value {
+  height: 2.15rem !important;
+
+  span {
+    font-size: 2.05rem !important;
+  }
+}
+
+.mat-mdc-option .mdc-list-item__primary-text {
+  font-size: 1.7rem !important;
+}
 
 html, body {
   @include mat.all-component-themes($custom-theme);
+}
+
+@media screen and (max-width: 1540px) {
+  .mat-mdc-select-trigger .mat-mdc-select-value {
+    height: 1.8rem !important;
+  
+    span {
+      font-size: 1.5rem !important;
+    }
+  }
+  
+  .mat-mdc-option .mdc-list-item__primary-text {
+    font-size: 1.375rem !important;
+  }
 }

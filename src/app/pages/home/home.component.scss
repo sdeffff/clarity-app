@@ -23,13 +23,13 @@ section {
         text-align: center;
 
         h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
 
             line-height: 4rem;
         }
 
         h3 {
-            font-size: 1.05rem;
+            font-size: 1.4rem;
             text-transform: uppercase;
 
             font-weight: 600;
@@ -48,6 +48,50 @@ section {
                 font-size: 1.1rem;
 
                 font-weight: 700;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1540px) {
+    section {
+        article {
+            h1 {
+                font-size: 4.1rem;
+            }
+
+            h3 {
+                font-size: 1.175rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1370px) {
+    section {
+        article {
+            h1 {
+                font-size: 4.1rem;
+            }
+
+            h3 {
+                font-size: 1.15rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1030px) {
+    section {
+        article {
+            h1 {
+                font-size: 3.75rem;
+
+                line-height: 3.25rem;
+            }
+
+            h3 {
+                font-size: 1rem;
             }
         }
     }

@@ -4,16 +4,6 @@
         <a href=""><button mat-button>Information</button></a>
     </nav>
 
-    <mat-form-field>
-        <mat-label>Search</mat-label>
-        <input matInput type="text" [(ngModel)]="searchValue" placeholder="F.e. faculty">
-        <button 
-        *ngIf="searchValue"
-        matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
-            <mat-icon>close</mat-icon>
-          </button>
-    </mat-form-field>
-
     <div>
         <a href="/selection-page"><button mat-flat-button>Start</button></a>
         <button 

@@ -15,7 +15,7 @@ header {
     align-items: center;
     justify-content: space-between;
 
-    padding: 1rem 2rem;
+    padding: 1rem 4rem;
 
     z-index: 99;
 
@@ -31,53 +31,8 @@ header {
             }
 
             img {
-                width: 7.5rem;
+                width: 10rem;
             }
-        }
-    }
-
-    mat-form-field {
-        min-height: 50px !important;
-        padding-block: .25rem !important;
-        width: 28rem !important;
-
-        input {
-            height: 60px !important;
-        }
-
-        /* Input styles */
-        .mdc-text-field--filled .mdc-floating-label {
-            font-family: 'Kinetika' !important;
-        }
-        
-        .mat-mdc-form-field-subscript-wrapper, .mat-mdc-form-field-bottom-align::before {
-            display: none !important;
-        }
-        
-        .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-            height: 50px !important;
-        }
-        
-        .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
-            font-family: 'Kinetika' !important;
-            color: $black !important;
-            caret-color: $purple !important;
-        }
-        
-        //Label: 
-        .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
-            top: calc(var(--mat-form-field-container-height)/2.35) !important;
-        }
-        
-        //Input
-        .mdc-text-field--filled, 
-        .mdc-text-field {
-            border-top-left-radius: .25rem !important;
-            border-top-right-radius: .25rem !important;
-            border-bottom-left-radius: .25rem !important;
-            border-bottom-right-radius: .25rem !important;
-        
-            border: 1px solid $grey !important;
         }
     }
 
@@ -85,11 +40,64 @@ header {
         display: flex;
         align-items: center;
 
-        gap: 1rem;
+        gap: 2rem;
 
         button {
-            padding: 1.3rem 1.4rem;
-            font-size: .95rem;
+            padding: 1.75rem 2rem;
+            font-size: 1.35rem;
         }
     }
 }
+
+@media screen and (max-width: 1540px) {
+    header {
+        img {
+            width: 8rem;
+        }
+
+        div {
+            gap: 1.25rem;
+
+            button {
+                padding: 1.45rem 1.5rem;
+                font-size: 1.15rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1370px) {
+    header {
+        padding: 1rem 3rem;
+
+        img {
+            width: 7rem;
+        }
+
+        div {
+            gap: 1.15rem;
+
+            button {
+                padding: 1.4rem 1.75rem;
+                font-size: 1.15rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1030px) {
+    header {
+        padding: 1rem 3rem;
+
+        img {
+            width: 6rem;
+        }
+
+        div {
+            button {
+                padding: 1.1rem 1.15rem;
+                font-size: 1rem;
+            }
+        }
+    }
+} 

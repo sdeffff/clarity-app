@@ -16,36 +16,85 @@ section {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2rem;
-
-        h2 {
-            font-size: 2rem;
-            color: #fff;
-        }
+        gap: 3rem;
     
         ul {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             place-items: center;
-            gap: 1.75rem;
+            gap: 2rem;
 
             li {
-                select {
-                    width: 200px !important;
+                mat-form-field {
+                    width: 20rem !important;
+                    height: 3.75rem !important;
+
+                    .mat-mdc-form-field-infix {
+                        height: 3.75rem !important;
+                    }
                 }
             }
         }
 
         a {
-            font-size: 1.25rem;
+            font-size: 2.1rem !important;
             font-weight: 600;
 
-            padding: 1.5rem 2rem;
+            padding: 2.2rem 2.75rem !important;
             border-radius: .75rem !important;
 
             &[disabled] {
                 color: #c0c0c0 !important;
                 background-color: #3649a9 !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1540px) {
+    section {
+        main {
+            ul {
+                gap: 2.75rem;
+
+                li {
+                    mat-form-field {
+                        width: 18rem !important;
+                        height: 3.5rem !important;
+    
+                        .mat-mdc-form-field-infix {
+                            height: 3.5rem !important;
+                        }
+                    }
+                }
+            }
+
+            a {
+                font-size: 1.5rem !important;
+                font-weight: 600;
+    
+                padding: 2rem 2.25rem !important;
+    
+                &[disabled] {
+                    color: #c0c0c0 !important;
+                    background-color: #3649a9 !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1370px) {
+    section {
+        main {
+            ul {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            a {
+                font-size: 1.75rem !important;
+
+                padding: 2.2rem 2.8rem !important;
             }
         }
     }

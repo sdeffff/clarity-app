@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -26,7 +26,8 @@ import { ErrorComponent } from '../technical/error/error.component';
   imports: [HttpClientModule, NgFor, MatButtonModule, NgIf, MatSelectModule, FormsModule],
   providers: [AppService],
   templateUrl: './selection-page.component.html',
-  styleUrl: './selection-page.component.scss'
+  styleUrl: './selection-page.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 
 //The start page where we choosing our uni, faculty, year and season
