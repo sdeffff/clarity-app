@@ -15,8 +15,8 @@ section {
 
         .image-container {
             position: relative;
-            width: 28rem;
-            height: 38rem;
+            width: 38rem;
+            height: 55rem;
             overflow: hidden;
 
             img.assignment-preview {
@@ -59,11 +59,11 @@ section {
                     align-items: center;
 
                     img {
-                        max-width: 2rem;
+                        max-width: 3.5rem;
                     }
 
                     p {
-                        font-size: 1.25rem;
+                        font-size: 2rem;
 
                         &::first-letter {
                             text-transform: uppercase;
@@ -77,10 +77,12 @@ section {
                     gap: .5rem;
 
                     h2 {
-                        font-size: 1.75rem;
+                        font-size: 2.5rem;
                     }
                     
                     a[mat-stroked-button] {
+                        padding-block: 1.5rem;
+
                         div {
                             color: #000;
 
@@ -90,7 +92,7 @@ section {
                             gap: .75rem;
 
                             p {
-                                font-size: 1.25rem;
+                                font-size: 1.825rem;
                             }
 
                             span {
@@ -99,15 +101,159 @@ section {
                                 gap: .25rem;
                              
                                 p {
-                                    font-size: 1.1rem;
+                                    font-size: 1.775rem;
                                 }
                             
                                 
                                 img {
-                                    max-width: 1rem;
+                                    max-width: 1.5rem;
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1540px) {
+    section {
+        main {
+            gap: 8rem;
+
+            .image-container {
+                width: 22rem;
+                height: 36rem;
+            }
+
+            article {
+                div {
+                    &:first-child {
+                        img {
+                            max-width: 2rem;
+                        }
+
+                        p {
+                            font-size: 1.5rem;
+                        }
+                    }
+
+                    &:last-child {
+                        h2 {
+                            font-size: 1.75rem;
+                        }
+
+                        a[mat-stroked-button] {
+                            padding-block: 1.25rem;
+
+                            div { 
+                                p {
+                                    font-size: 1.25rem;
+                                }
+
+                                span {
+                                    p {
+                                        font-size: 1.2rem;
+                                    }
+
+                                    img {
+                                        max-width: 1.15rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1180px) {
+    section {
+        main {
+            article {
+                gap: 1.1rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 820px) {
+    section {
+        main {
+            gap: 1.5rem;
+
+            .image-container {
+                width: 18rem;
+                height: 30rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 680px) {
+    section {
+        main {
+            gap: 1rem;
+
+            .image-container {
+                width: 15rem;
+                height: 27rem;
+            }
+
+            article {
+                div {
+                    &:last-child {
+                        h2 {
+                            font-size: 1.4rem;
+                        }
+
+                        a[mat-stroked-button] {
+                            padding-block: 1.2rem;
+
+                            div { 
+                                gap: .5rem;
+
+                                p {
+                                    font-size: 1.2rem;
+                                }
+
+                                span {
+                                    p {
+                                        font-size: 1.1rem;
+                                    }
+
+                                    img {
+                                        max-width: 1.05rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 560px) {
+    section {
+        main {
+            flex-direction: column;
+            align-items: center;
+
+            article {
+                padding: 0;
+
+                div {
+                    &:first-child {
+                        display: none;
+                    }
+
+                    &:last-child {
+                        align-items: center;
                     }
                 }
             }

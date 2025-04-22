@@ -59,21 +59,21 @@ section {
 
                 li {
                     mat-form-field {
-                        width: 18rem !important;
-                        height: 3.5rem !important;
+                        width: 17rem !important;
+                        height: 3.1rem !important;
     
                         .mat-mdc-form-field-infix {
-                            height: 3.5rem !important;
+                            height: 3.1rem !important;
                         }
                     }
                 }
             }
 
             a {
-                font-size: 1.5rem !important;
+                font-size: 1.4rem !important;
                 font-weight: 600;
     
-                padding: 2rem 2.25rem !important;
+                padding: 1.9rem 2.2rem !important;
     
                 &[disabled] {
                     color: #c0c0c0 !important;
@@ -92,9 +92,52 @@ section {
             }
 
             a {
-                font-size: 1.75rem !important;
+                font-size: 1.7rem !important;
 
-                padding: 2.2rem 2.8rem !important;
+                padding: 2.15rem 2.65rem !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 630px) {
+    section {
+        main {
+            ul {
+                gap: 2rem;
+
+                li {
+                    mat-form-field {
+                        width: 15rem !important;
+                        height: 3.25rem !important;
+    
+                        .mat-mdc-form-field-infix {
+                            height: 3.25rem !important;
+                        }
+                    }
+                }
+            }
+
+            a {
+                font-size: 1.35rem !important;
+                font-weight: 600;
+    
+                padding: 1.8rem 2rem !important;
+    
+                &[disabled] {
+                    color: #c0c0c0 !important;
+                    background-color: #3649a9 !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    section {
+        main {
+            ul {
+                grid-template-columns: repeat(1, 1fr);
             }
         }
     }

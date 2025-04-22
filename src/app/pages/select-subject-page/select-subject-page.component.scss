@@ -20,16 +20,72 @@ section {
                 position: relative;
 
                 a {
-                    width: 22rem;
-                    height: 6rem;
+                    width: 26rem;
+                    height: 8rem;
 
                     text-align: center;
 
-                    font-size: 1.5rem;
+                    font-size: 1.85rem;
                     font-weight: 600;
 
                     padding: 2.25rem .5rem !important;
                     border-radius: 1rem !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1540px) {
+    section {
+        ul {
+            grid-template-columns: repeat(2, 1fr);
+
+            li {
+                div {
+                    a {
+                        width: 22rem;
+                        height: 6rem;
+
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1370px) {
+    section {
+        ul {
+            li {
+                div {
+                    a {
+                        width: 20rem;
+                        height: 5rem;
+
+                        font-size: 1.35rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 700px) {
+    section {
+        margin-top: 6rem;
+
+        ul {
+            grid-template-columns: repeat(1, 1fr);
+
+            li {
+                div {
+                    a {
+                        width: 18rem;
+
+                        font-size: 1.3rem;
+                    }
                 }
             }
         }
